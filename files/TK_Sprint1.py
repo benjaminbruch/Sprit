@@ -2,6 +2,7 @@ import PySimpleGUI as sg
 import pytankerkoenig as tk
 from geopy.geocoders import Nominatim
 
+
 def adresse_zu_gps(adresse):
     geolocator = Nominatim(user_agent="FH_SWF")
     location = geolocator.geocode(adresse)
