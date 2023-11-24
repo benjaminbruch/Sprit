@@ -1,5 +1,5 @@
 # Kommentar
-from sprit.model.search_for_stations_model import SearchForStationsModel
+from model.search_for_stations_model import SearchForStationsModel
 from view.search_for_stations_view import SearchForStationsView
 
 def main():

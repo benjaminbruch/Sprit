@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from sprit.model.search_for_stations_model import SearchForStationsModel, Distance
+from model.search_for_stations_model import SearchForStationsModel, Distance
 
 
 class SearchForStationsView:

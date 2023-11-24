@@ -1,8 +1,8 @@
 import pytankerkoenig as tk
 from geopy.geocoders import Nominatim
 from enum import Enum
-from sprit.resources.credentials import Credentials
-from sprit.model.station_model import Station
+from resources.credentials import Credentials
+from model.station_model import Station
 
 
 class Distance(Enum):
