@@ -12,7 +12,21 @@ class SearchForStationsView:
         layout = [
             [sg.Text('Entfernung'),
              sg.Spin(['2km', '5km', '10km'], key='-Distance-')
-             ],
+            ],
+            [sg.Text()],
+              [sg.Text('Marken:'),
+               sg.Radio('Alle', "RADIO1", default=True),
+               sg.Radio('Aral', "RADIO1"),
+               sg.Radio('Shell', "RADIO1"),
+               sg.Radio('Total', "RADIO1")
+            ],
+            [sg.Text()],
+              [sg.Text('Sortierung nach: '),
+               sg.Radio('Entfernung', "RADIO2", default=True),
+               sg.Radio('Preis', "RADIO2"),
+            ],
+            [sg.Text()],
+            [sg.Checkbox('Nur geöffnete Tankstellen', default=False)], 
             [sg.Text()],
             [sg.Text('Adresse:'),
              sg.Input(key='-Input-')
@@ -55,7 +69,6 @@ class SearchForStationsView:
                 open = OpenType.is_open
                 sort = SortBy.distance
                 print('TEST: ', adress, distance, sprit, brand, open, sort)
-                #data = SearchForStationsModel()
                 data = self.view_model.get_nearby_stations(adress, distance, sprit, brand, open, sort)
                 self.window['-ML-'].update(data)
 
