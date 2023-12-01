@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from model.search_for_stations_model import SearchForStationsModel, Distance
+from model.search_for_stations_model import SearchForStationsModel, Distance, SpritType, BrandType, OpenType, SortBy
 
 
 class SearchForStationsView:
@@ -45,8 +45,19 @@ class SearchForStationsView:
                         distance = Distance.FIVE_KM
                     case '10km':
                         distance = Distance.TEN_KM
+# Alter Aufruf 
+#                data = self.view_model.get_nearby_stations(adress, distance)
 
-                data = self.view_model.get_nearby_stations(adress, distance)
+                #adresse = 'Berlin'
+                #dist = Distance.FIVE_KM
+                sprit = SpritType.e10
+                brand = BrandType.total
+                open = OpenType.is_open
+                sort = SortBy.distance
+
+                data = SearchForStationsModel()
+                data.get_nearby_stations(adress, distance, sprit, brand, open, sort)
+
                 self.window['-ML-'].update(data)
 
         self.window.close()
