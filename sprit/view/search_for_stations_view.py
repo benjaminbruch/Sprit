@@ -54,10 +54,9 @@ class SearchForStationsView:
                 brand = BrandType.total
                 open = OpenType.is_open
                 sort = SortBy.distance
-
-                data = SearchForStationsModel()
-                data.get_nearby_stations(adress, distance, sprit, brand, open, sort)
-
+                print('TEST: ', adress, distance, sprit, brand, open, sort)
+                #data = SearchForStationsModel()
+                data = self.view_model.get_nearby_stations(adress, distance, sprit, brand, open, sort)
                 self.window['-ML-'].update(data)
 
         self.window.close()

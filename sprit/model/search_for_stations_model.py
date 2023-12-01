@@ -34,11 +34,11 @@ class SearchForStationsModel:
     # def get_nearby_stations(self, address: str, dist: Distance, sprit_type: SpritType = SpritType.all,
     #                         sort_by: SortBy = SortBy.distance) -> [Station]:
 
-    def get_nearby_stations(self, address: str, dist: Distance, sprit_type: SpritType = SpritType.all,
+    def get_nearby_stations(self, addr: str, dist: Distance, sprit_type: SpritType = SpritType.all,
                              brand: BrandType = BrandType.all, open: OpenType = OpenType.all, sort_by: SortBy = SortBy.distance) -> [Station]:
-    
+        print('Adresse:', addr)
     # Längen und Breitengrad aus Adresse ermitteln
-        lat, long = self._address_to_gps(address)
+        lat, long = self._address_to_gps(addr)
 
         response_data = tk.getNearbyStations(Credentials.tankerkoenig_key, float(lat), float(long), dist.value, sprit_type.value, sort_by.value)
 

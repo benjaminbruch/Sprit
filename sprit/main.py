@@ -8,6 +8,5 @@ def main():
     view = SearchForStationsView(model)
     view.run()
 
-
 if __name__ == "__main__":
     main()
