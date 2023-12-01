@@ -10,23 +10,30 @@ class SearchForStationsView:
 
         # Define the window's contents (layout)
         layout = [
-            [sg.Text('Entfernung'),
+            [sg.Text('Entfernung: '),
              sg.Spin(['2km', '5km', '10km'], key='-Distance-')
             ],
             [sg.Text()],
-              [sg.Text('Marken:'),
-               sg.Radio('Alle', "RADIO1", default=True),
-               sg.Radio('Aral', "RADIO1"),
-               sg.Radio('Shell', "RADIO1"),
-               sg.Radio('Total', "RADIO1")
+              [sg.Text('Marken: '),
+               sg.Radio('Alle', "Radio1", key='-Brand_Alle-', default=True),
+               sg.Radio('Aral', "Radio1", key='-Brand_Aral-'),
+               sg.Radio('Shell', "Radio1", key='-Brand_Shell-'),
+               sg.Radio('Total', "Radio1", key='-Brand_Total-')
+            ],
+            [sg.Text()],
+              [sg.Text('Kraftstoff: '),
+               sg.Radio('all', "Radio2", key='-Sprit_Alle-', default=True),
+               sg.Radio('e5', "Radio2", key='-Sprit_e5-'),
+               sg.Radio('e10', "Radio2", key='-Sprit_e10-'),
+               sg.Radio('Diesel', "Radio2", key='-Sprit_Diesel-'),
             ],
             [sg.Text()],
               [sg.Text('Sortierung nach: '),
-               sg.Radio('Entfernung', "RADIO2", default=True),
-               sg.Radio('Preis', "RADIO2"),
+               sg.Radio('Entfernung', "Radio3", key='-Sort_dist-', default=True),
+               sg.Radio('Preis', "Radio3", key='-Sort_price-'),
             ],
             [sg.Text()],
-            [sg.Checkbox('Nur geöffnete Tankstellen', default=False)], 
+            [sg.Checkbox('Nur geöffnete Tankstellen', key='-Open-', default=False)], 
             [sg.Text()],
             [sg.Text('Adresse:'),
              sg.Input(key='-Input-')
@@ -59,15 +66,33 @@ class SearchForStationsView:
                         distance = Distance.FIVE_KM
                     case '10km':
                         distance = Distance.TEN_KM
-# Alter Aufruf 
+# Alter Aufruf !!!!!!! Aufruf Erklären ??????????
 #                data = self.view_model.get_nearby_stations(adress, distance)
 
-                #adresse = 'Berlin'
-                #dist = Distance.FIVE_KM
+                #Marke aus Eingabe ermitteln
+                if values['-Brand_Alle-'] == True: brand = BrandType.all
+                elif values['-Brand_Aral-'] == True: brand = BrandType.aral
+                elif values['-Brand_Shell-'] == True: brand = BrandType.shell
+                elif values['-Brand_Total-'] == True: brand = BrandType.total
+
+                #Kraftstoff aus Eingabe ermitteln
+                if values['-Sprit_Alle-'] == True: sprit = SpritType.all
+                elif values['-Sprit_e5-'] == True: sprit = SpritType.e5
+                elif values['-Sprit_e10-'] == True: sprit = SpritType.e10
+                elif values['-Sprit_Diesel-'] == True: sprit = SpritType.diesel
+
+                #Sortierung aus Eingabe ermitteln
+                if values['-Sort_dist-'] == True: sort = SortBy.distance
+                elif values['-Sort_price-'] == True: sort = SortBy.price
+
+                #Aus Eingabe ermitteln, ob nur geöffnete Tankstellen angezeigt werden sollen
+                if values['-Open-'] == True: open = OpenType.is_open
+                else: open = OpenType.all
+
                 sprit = SpritType.e10
-                brand = BrandType.total
-                open = OpenType.is_open
-                sort = SortBy.distance
+                #brand = BrandType.total
+                #open = OpenType.is_open
+                #sort = SortBy.distance
                 print('TEST: ', adress, distance, sprit, brand, open, sort)
                 data = self.view_model.get_nearby_stations(adress, distance, sprit, brand, open, sort)
                 self.window['-ML-'].update(data)
