@@ -34,9 +34,10 @@ class SearchForStationsModel:
                                              sort_by.value)
 
         stations = []
-        for station in response_data['stations']:
-            stations.append(Station(**station))
-
+        for i in range(len(response_data['stations'])):
+            #stations.append(Station(**station))
+            stations.append(response_data['stations'][i]['name'])
+            print(response_data['stations'][i]['name'])
         return stations
 
     def _address_to_gps(self, address: str):
