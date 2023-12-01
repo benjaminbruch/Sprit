@@ -39,7 +39,7 @@ class SearchForStationsModel:
     #                        sort_by: SortBy = SortBy.distance) -> [Station]:
     
     def get_nearby_stations(self, address: str, dist: Distance, sprit_type: SpritType = SpritType.all,
-                             brand_type: BrandType = BrandType.all, sort_by: SortBy = SortBy.distance) -> [Station]:
+                             brand: BrandType = BrandType.all, open: OpenType = OpenType.all, sort_by: SortBy = SortBy.distance) -> [Station]:
         
         #GPS Daten aus Adresse ermitteln
         lat, long = self._address_to_gps(address)
@@ -53,8 +53,6 @@ class SearchForStationsModel:
           #                                   sprit_type.value,
            #                                  sort_by.value)
 
-        brand = BrandType.all
-        open = OpenType.all
 
         #Ergebnis Liste
         result = []
@@ -63,14 +61,14 @@ class SearchForStationsModel:
         if brand.value == BrandType.all.value and open.value == OpenType.all.value:
             print("all Brands Open&Close")
             result = response_data
-            print("all Brands Open&Close ====> OK!")
+            #print("all Brands Open&Close ====> OK!")
 
         # Nur geöffnete Tankstellen aller Marken
         elif brand.value == BrandType.all.value and open.value == OpenType.is_open.value:
             print("all Brands only Open")
             for i in range(len(response_data['stations'])):
                 if (response_data['stations'][i]['isOpen']):
-                    print('If ==> OK!')
+                    #print('If ==> OK!')
                     result.append(response_data['stations'][i]['name'])
             print("all Brands only Open ====> OK!")
 
@@ -79,7 +77,7 @@ class SearchForStationsModel:
             print("special Brand Open&Close")
             for i in range(len(response_data['stations'])):
                 if (response_data['stations'][i]['brand'] == brand.value):
-                    print('If ===>Okay!')
+                    #print('If ===>Okay!')
                     result.append(response_data['stations'][i]['name'])
             print("special Brand Open&Close ====> OK!")
 
@@ -88,7 +86,7 @@ class SearchForStationsModel:
             print("special Brand only Open")
             for i in range(len(response_data['stations'])):
                 if ((response_data['stations'][i]['brand']) == brand.value) and ((response_data['stations'][i]['isOpen'])):
-                    print('IF ====> OK!')
+                    #print('IF ====> OK!')
                     result.append(response_data['stations'][i]['name'])
             print("special Brand only Open ====> OK!")
         print(result)
@@ -102,10 +100,14 @@ class SearchForStationsModel:
         else:
             return None
         
-sort = SortBy.distance
-sprit = SpritType.e10
+
+adresse = 'Berlin'
 dist = Distance.FIVE_KM
+sprit = SpritType.e10
+sort = SortBy.distance
+brand = BrandType.total
+open = OpenType.is_open
 
 data = SearchForStationsModel()
-data.get_nearby_stations('Berlin', dist, sprit, sort)
+data.get_nearby_stations(adresse, dist, sprit, brand, open, sort)
 
