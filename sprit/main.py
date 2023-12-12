@@ -1,5 +1,5 @@
-from sprit.model.search_for_stations_model import SearchForStationsModel
-from sprit.view.search_for_stations_view import SearchForStationsView
+from model.search_for_stations_model import SearchForStationsModel
+from view.search_for_stations_view import SearchForStationsView
 
 
 def main():
