@@ -66,8 +66,6 @@ class SearchForStationsView:
                         distance = Distance.FIVE_KM
                     case '10km':
                         distance = Distance.TEN_KM
-# Alter Aufruf !!!!!!! Aufruf Erklären ??????????
-#                data = self.view_model.get_nearby_stations(adress, distance)
 
                 #Marke aus Eingabe ermitteln
                 if values['-Brand_Alle-'] == True: brand = BrandType.all
@@ -88,12 +86,7 @@ class SearchForStationsView:
                 #Aus Eingabe ermitteln, ob nur geöffnete Tankstellen angezeigt werden sollen
                 if values['-Open-'] == True: open = OpenType.is_open
                 else: open = OpenType.all
-
-                sprit = SpritType.e10
-                #brand = BrandType.total
-                #open = OpenType.is_open
-                #sort = SortBy.distance
-                print('TEST: ', adress, distance, sprit, brand, open, sort)
+                
                 data = self.view_model.get_nearby_stations(adress, distance, sprit, brand, open, sort)
                 self.window['-ML-'].update(data)
 
