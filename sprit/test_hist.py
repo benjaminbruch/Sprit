@@ -10,7 +10,7 @@ def main():
     #print(station)
 
     # Beispiel "get_prices"
-    tag = '2023-12-10'
+    tag = '2023-12-01'
     prices = hd.get_date_prices(tag)
     #print(prices)
 
