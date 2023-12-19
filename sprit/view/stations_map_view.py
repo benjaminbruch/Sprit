@@ -15,9 +15,10 @@ class StationsMapView:
         self.root.mainloop()
 
     def add_stations(self, stations):
-        print("Adding stations to map")
+        for station in stations:
+            self.map_widget.set_marker(station.lat, station.lng, station.name)
 
-    def select_station(self, station):
+    def set_selected_station(self, station):
         self.map_widget.set_position(station.lat, station.lng)
 
 

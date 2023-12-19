@@ -22,6 +22,34 @@ class StationsSearchView:
         self.search_button = tk.Button(self.search_frame, text='Suchen', command=self.search)
         self.search_button.pack(side='right', padx=8)
 
+        # Create a new frame for the pickers
+        self.pickers_frame = tk.Frame(self.root)
+        self.pickers_frame.pack(side='top', fill='x', padx=16, pady=16)
+
+        # Create label and picker for "Suchradius" in the pickers frame
+        self.radius_var = tk.StringVar()
+        self.radius_var.set("1")  # default value
+        self.radius_label = tk.Label(self.pickers_frame, text="Suchradius")
+        self.radius_label.pack(side='left', padx=8)
+        self.radius_picker = tk.OptionMenu(self.pickers_frame, self.radius_var, *range(1, 11))
+        self.radius_picker.pack(side='left', padx=8)
+
+        # Create label and picker for "Sprit-Typ" in the pickers frame
+        self.fuel_type_var = tk.StringVar()
+        self.fuel_type_var.set("Diesel")  # default value
+        self.fuel_type_label = tk.Label(self.pickers_frame, text="Sprit-Typ")
+        self.fuel_type_label.pack(side='left', padx=8)
+        self.fuel_type_picker = tk.OptionMenu(self.pickers_frame, self.fuel_type_var, "Diesel", "E10", "E5")
+        self.fuel_type_picker.pack(side='left', padx=8)
+
+        # Create label and picker for "Sortieren nach" in the pickers frame
+        self.sort_by_var = tk.StringVar()
+        self.sort_by_var.set("Preis")  # default value
+        self.sort_by_label = tk.Label(self.pickers_frame, text="Sortieren nach")
+        self.sort_by_label.pack(side='left', padx=8)
+        self.sort_by_picker = tk.OptionMenu(self.pickers_frame, self.sort_by_var, "Preis", "Entfernung")
+        self.sort_by_picker.pack(side='left', padx=8)
+
     def search(self):
         #self.search_callback(self.search_var.get())
         self.search_callback("Dresden, Hansastraße")

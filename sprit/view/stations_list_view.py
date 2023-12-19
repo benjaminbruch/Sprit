@@ -4,9 +4,10 @@ from sprit.model.station_info_card_model import StationInfoCardModel
 from sprit.view.station_info_card_view import StationInfoCard
 
 class StationsListView:
-    def __init__(self, root, stations):
+    def __init__(self, root, model, selected_station_callback):
         self.root = root
-        self.stations = stations
+        self.model = model
+        self.selected_station_callback = selected_station_callback
 
         self.create_list_view()
         self.selected_card = None
@@ -32,7 +33,7 @@ class StationsListView:
         self.scrollbar.pack(side="right", fill="y", padx=16)
 
     def populate_listbox(self):
-        for station in self.stations:
+        for station in self.model.stations:
             infoCardModel = StationInfoCardModel(station)
             card = StationInfoCard(self.scrollable_frame, infoCardModel, self.on_card_click)
             card.pack(fill='x', expand=True, padx=16, pady=16)
@@ -42,18 +43,16 @@ class StationsListView:
             self.selected_card.toggle_select()
         self.selected_card = card
         self.selected_card.toggle_select()
-        clicked_station = card.get_station()
-        print(clicked_station.name)# Now you can use clicked_station for whatever you need
+        self.model.set_selected_station(card.get_station())
+        self.selected_station_callback(self.model.get_selected_station())
+
 
 
     def update_stations(self, new_stations):
         for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
-        self.stations = new_stations
+        self.model.stations = new_stations
         self.populate_listbox()
-
-    def filter_stations_by_id(stations, id):
-        return [station for station in stations if station.id == id]
 
     def run(self):
         self.root.mainloop()
