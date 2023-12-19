@@ -1,3 +1,18 @@
+from enum import Enum
+
+
+class SpritType(Enum):
+    e5 = "e5"
+    e10 = "e10"
+    diesel = "diesel"
+    all = "all"
+
+
+class SortBy(Enum):
+    distance = "dist"
+    price = "price"
+
+
 class Station:
     def __init__(self, id, name, brand, street, place, lat, lng, dist, diesel, e5, e10, isOpen, houseNumber, postCode):
         self.id = id
