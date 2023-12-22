@@ -33,7 +33,6 @@ class hist_data:
         data_dict = {}
         for row in results:
             data_dict[row[0]] = {'uuid': row[0], 'name': row[1], 'brand': row[2], 'street': row[3], 'house_number': row[4], 'post_code': row[5], 'city': row[6]}
-            #print(data_dict[row[0]])
        
         self.print_dict(data_dict)
 
@@ -55,12 +54,11 @@ class hist_data:
 
         data_dict = {}
         for row in results:
-            #data_dict[row[0]] = {'date': row[0], 'time': row[1], 'uuid': row[2], 'diesel': row[3], 'e5': row[4], 'e10': row[5]}
             data_dict[row] = {'date': row[0], 'time': row[1], 'uuid': row[2], 'diesel': row[3], 'e5': row[4], 'e10': row[5]}
-            #print(data_dict[row[0]])
-        # Verbindung zur Datenbank schließen
-
+        #Zur Überprüfung Ausgabe des Ergebnisses
         #self.print_dict(data_dict)
+
+        # Verbindung zur Datenbank schließen
         conn.close()
 
         return data_dict
