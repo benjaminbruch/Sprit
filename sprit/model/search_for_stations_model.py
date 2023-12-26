@@ -31,18 +31,19 @@ class SortBy(Enum):
 
 class SearchForStationsModel:
 
-    # erste Version der Funktion
-    # def get_nearby_stations(self, address: str, dist: Distance, sprit_type: SpritType = SpritType.all,
-    #                         sort_by: SortBy = SortBy.distance) -> [Station]:
-
+    #Methode um Tankstellen nach bestimmten Kriterien zu ermitteln
     def get_nearby_stations(self, addr: str, dist: Distance, sprit_type: SpritType = SpritType.all,
                              brand: BrandType = BrandType.all, open: OpenType = OpenType.all, sort_by: SortBy = SortBy.distance):
-
+        
+        # Überprüfen ob eine Adresse angegeben wurde
         if len(addr) == 0:
-            return ('Error: keine Adresse angegeben!')
-        # Längen und Breitengrad aus Adresse ermitteln
+            return ('Fehler: keine Adresse angegeben!')
+        
+        # Längen und Breitengrad aus Adresse ermitteln 
         lat, long = self._address_to_gps(addr)
-
+        if lat == None or long == None:
+            return ('Fehler: GPS Koordinaten konnten nicht aus Adresse ermittelt werden!')
+        
         response_data = tk.getNearbyStations(Credentials.tankerkoenig_key, float(lat), float(long), dist.value, sprit_type.value, sort_by.value)
 
         result = []
@@ -70,10 +71,13 @@ class SearchForStationsModel:
                     result.append(response_data['stations'][i])
         return result
 
-    def _address_to_gps(self, address: str):
-        geolocator = Nominatim(user_agent=Credentials.usr_agent)
-        location = geolocator.geocode(address)
-        if location:
-            return location.latitude, location.longitude
-        else:
-            return None
+    def _address_to_gps(self, address: str):      
+        try:      
+            geolocator = Nominatim(user_agent=Credentials.usr_agent)
+            location = geolocator.geocode(address)
+            if location:
+                return location.latitude, location.longitude
+            else:
+                return None, None
+        except:
+            return None, None
