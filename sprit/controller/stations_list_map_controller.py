@@ -1,20 +1,17 @@
-import asyncio
-from sprit.controller.stations_search_controller import StationsSearchController
+import customtkinter
 from sprit.controller.stations_list_controller import StationsListController
 from sprit.controller.stations_map_controller import StationsMapController
 from sprit.view.stations_list_map_view import StationsListMapView
 
-class StationsListMapController:
-    def __init__(self, root):
-        self.root = root
+class StationsListMapController():
+    def __init__(self):
 
-        self.stations_search_controller = StationsSearchController(self.root, self.search_input_callback)
-        self.stations_list_controller = StationsListController(self.root, self.selected_station_on_list_callback)
-        self.stations_map_controller = StationsMapController(self.root)
+        self.stations_list_controller = StationsListController()
+        self.stations_map_controller = StationsMapController()
 
         self.stations_list_map_view = StationsListMapView(self.stations_list_controller.get_list_view(), self.stations_map_controller.get_stations_map_view())
 
-    def run(self):
+    def start(self):
         self.stations_list_map_view.start()
 
     def search_input_callback(self, search_query):

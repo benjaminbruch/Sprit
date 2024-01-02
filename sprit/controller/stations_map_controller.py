@@ -1,11 +1,13 @@
+import customtkinter
+
 from sprit.model.stations_map_model import StationsMapModel
 from sprit.view.stations_map_view import StationsMapView
-class StationsMapController:
+class StationsMapController():
 
-    def __init__(self, root):
-        self.root = root
-        self.stations_map_view = StationsMapView(self.root)
+    def __init__(self):
         self.stations_map_model = StationsMapModel()
+        self.stations_map_view = StationsMapView(self.stations_map_model)
+
 
     def get_stations_map_view(self):
         return self.stations_map_view

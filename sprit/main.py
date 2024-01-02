@@ -1,10 +1,9 @@
-import tkinter as tk
+import customtkinter
 from sprit.controller.stations_list_map_controller import StationsListMapController
 
 def main():
-    root = tk.Tk()
-    controller = StationsListMapController(root)
-    controller.run()
+    controller = StationsListMapController()
+    controller.start()
 
 if __name__ == "__main__":
     main()
