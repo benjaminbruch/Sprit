@@ -12,10 +12,10 @@ class StationsListMapController:
         self.stations_list_controller = StationsListController(self.root, self.selected_station_on_list_callback)
         self.stations_map_controller = StationsMapController(self.root)
 
-        self.stations_list_map_view = StationsListMapView(self.root, self.stations_list_controller.get_list_view(), self.stations_map_controller.get_stations_map_view())
+        self.stations_list_map_view = StationsListMapView(self.stations_list_controller.get_list_view(), self.stations_map_controller.get_stations_map_view())
 
     def run(self):
-        self.stations_list_map_view.run()
+        self.stations_list_map_view.start()
 
     def search_input_callback(self, search_query):
         searchModel = self.stations_search_controller.model
