@@ -4,17 +4,20 @@ import tkintermapview
 from sprit.model.stations_map_model import StationsMapModel
 
 class StationsMapView(customtkinter.CTk):
-    def __init__(self, model):
-
+    def __init__(self):
         super().__init__()
-        self.model: StationsMapModel = model
-        #self.map_widget = tkintermapview.TkinterMapView(self, corner_radius=0)
 
-        #self.map_widget.set_address("Berlin")
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=0)  # Configure the search bar row to not expand
+        self.grid_rowconfigure(1, weight=1)  # Configure the map view row to expand
 
-        self.entry = customtkinter.CTkEntry(master=self,
-                                       placeholder_text="type address")
-        self.entry.grid(row=0, column=0, sticky="we", padx=(12, 0), pady=12)
+        # Create the search bar
+        self.search_bar = customtkinter.CTkEntry(self, placeholder_text="type address")
+        self.search_bar.grid(row=0, column=0, sticky="we", padx=(12, 0), pady=12)
+
+        # Create the map view
+        self.map_view = tkintermapview.TkinterMapView(self, corner_radius=0)
+        self.map_view.grid(row=1, column=0, sticky="nsew")
 
 
 

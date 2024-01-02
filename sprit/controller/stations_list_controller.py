@@ -14,5 +14,5 @@ class StationsListController:
         return self.stations_list_model.get_selected_station()
 
     def get_list_view(self):
-        return self.stations_list_view
+        return self.stations_list_view.scrollable_frame
 

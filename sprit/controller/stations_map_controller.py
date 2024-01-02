@@ -6,7 +6,7 @@ class StationsMapController():
 
     def __init__(self):
         self.stations_map_model = StationsMapModel()
-        self.stations_map_view = StationsMapView(self.stations_map_model)
+        self.stations_map_view = StationsMapView()
 
 
     def get_stations_map_view(self):

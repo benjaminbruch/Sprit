@@ -3,18 +3,18 @@ from tkintermapview import TkinterMapView
 
 
 class StationsListMapView(customtkinter.CTk):
-
-    window_name = "Tankstellensuche"
-    width = 800
-    height = 600
-
     def __init__(self, list_view, map_view):
 
-        self.title(self.window_name)
-        self.geometry(str(self.width) + "x" + str(self.height))
-        self.minsize(self.width, self.height)
-
         super().__init__()
+
+        window_name = "Tankstellensuche"
+        width = 800
+        height = 600
+
+        self.title(window_name)
+        self.geometry(str(width) + "x" + str(height))
+        self.minsize(width, height)
+
         self.list_view = list_view
         self.map_view = map_view
 
