@@ -1,20 +1,23 @@
 
 import customtkinter
-from sprit.model.stations_list_model import StationsListModel
 from sprit.model.station_info_card_model import StationInfoCardModel
 from sprit.view.station_info_card_view import StationInfoCardView
 
 
 class StationsListView(customtkinter.CTkScrollableFrame):
-    def __init__(self, master, stations_list_model: StationsListModel, **kwargs):
+    def __init__(self, master, on_station_card_click, **kwargs):
         super().__init__(master, **kwargs)
+        self.on_station_card_click = on_station_card_click
 
-        self.model: StationsListModel = stations_list_model
-
-    def update_view(self):
-        for i, station in enumerate(self.model.stations):
+    def update_view(self, stations):
+        for i, station in enumerate(stations):
             station_info_card = StationInfoCardView(self, StationInfoCardModel(station), fg_color='#4e5d77')
             station_info_card.grid(row=i, column=0, padx=10, pady=(10, 10), sticky="news")
+            self.bind_click_event_to_all_children(station_info_card, station)
             self.grid_rowconfigure(i, weight=1)
             self.grid_columnconfigure(0, weight=1)
-        
+
+    def bind_click_event_to_all_children(self, parent, station):
+        for child in parent.winfo_children():
+            child.bind("<Button-1>", lambda event, s=station: self.on_station_card_click(s, event))
+            self.bind_click_event_to_all_children(child, station)

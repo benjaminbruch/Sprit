@@ -1,7 +1,7 @@
 class StationInfoCardModel:
     def __init__(self, station):
         self.station = station
-        self.price = station.e10
+        self.price = station.price
         self.company_name = station.brand
         self.street = station.street + " " + str(station.house_number)
         self.city = station.place

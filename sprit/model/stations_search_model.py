@@ -4,18 +4,17 @@ from sprit.resources.credentials import Credentials
 from sprit.model.station_model import Station, SortBy, SpritType
 
 
-
 class StationsSearchModel:
 
     def __init__(self):
         self.stations = []
 
-    def get_nearby_stations(self, address: str, dist: int, sprit_type: SpritType = SpritType.all,
+    def get_nearby_stations(self, address: str, dist: int, sprit_type: str,
                             sort_by: SortBy = SortBy.distance) -> [Station]:
         lat, long = self._address_to_gps(address)
 
         response_data = pytking.getNearbyStations(Credentials.tankerkoenig_key, float(lat), float(long), dist,
-                                                  sprit_type.value,
+                                                  sprit_type,
                                                   sort_by.value)
 
         self.stations = []

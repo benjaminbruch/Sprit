@@ -32,7 +32,9 @@ class StationInfoCardView(customtkinter.CTkFrame):
 
         self.company_label = customtkinter.CTkLabel(self.company_address_frame,
                                                     text=self.model.company_name,
-                                                    font=('Arial', 22))
+                                                    font=('Arial', 22),
+                                                    wraplength=161,
+                                                    justify="left")
         self.company_label.grid(row=0, column=0, sticky='nw', padx=(5, 5), pady=(5, 0))
 
         self.address_label = customtkinter.CTkLabel(self.company_address_frame,
