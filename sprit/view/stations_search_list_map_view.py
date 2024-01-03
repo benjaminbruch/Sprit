@@ -93,7 +93,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             self.show_error("Adresse konnte nicht gefunden werden. Bitte überprüfen Sie Ihre Eingabe und versuchen es nochmal!")
 
         for station in self.model.stations:
-            self.map_widget.set_marker(station.lat, station.lng, text=station.brand)
+            self.map_widget.set_marker(station.lat, station.lng, text=station.brand+" ("+str(station.price)+"€)")
 
     def on_station_card_click(self, station, card, event=None):
         if self.model.selected_card is not None:
