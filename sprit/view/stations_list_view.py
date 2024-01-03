@@ -1,25 +1,20 @@
+
 import customtkinter
-from tkinter import ttk
 from sprit.model.stations_list_model import StationsListModel
-from sprit.view.station_info_card_view import StationInfoCard
+from sprit.model.station_info_card_model import StationInfoCardModel
+from sprit.view.station_info_card_view import StationInfoCardView
 
-class StationsListView(customtkinter.CTk):
-    def __init__(self, model):
-        super().__init__()
 
-        self.model: StationsListModel = model
-        self.station_cards = []
+class StationsListView(customtkinter.CTkScrollableFrame):
+    def __init__(self, master, stations_list_model: StationsListModel, **kwargs):
+        super().__init__(master, **kwargs)
 
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(0, weight=1)
-
-        self.scrollable_frame = customtkinter.CTkScrollableFrame(self)
-        self.scrollable_frame.grid(row=0, column=0, sticky="nsew")
+        self.model: StationsListModel = stations_list_model
 
     def update_view(self):
-        for i, value in enumerate(self.model.stations):
-            station_info_card = StationInfoCard(self, value)
-            self.scrollable_frame.grid(row=i, column=0, padx=10, pady=(10, 0), sticky="w")
-            self.station_cards.append(station_info_card)
-
+        for i, station in enumerate(self.model.stations):
+            station_info_card = StationInfoCardView(self, StationInfoCardModel(station), fg_color='#4e5d77')
+            station_info_card.grid(row=i, column=0, padx=10, pady=(10, 10), sticky="news")
+            self.grid_rowconfigure(i, weight=1)
+            self.grid_columnconfigure(0, weight=1)
         
