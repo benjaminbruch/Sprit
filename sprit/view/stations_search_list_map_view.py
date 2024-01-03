@@ -1,8 +1,9 @@
 import customtkinter
 from tkintermapview import TkinterMapView
+from CTkMessagebox import CTkMessagebox
 from sprit.view.stations_list_view import StationsListView
-from sprit.model.stations_search_model import StationsSearchModel
-from sprit.model.station_model import Station, SortBy, SpritType
+from sprit.model.stations_search_model import StationsSearchModel, GeocodingError
+from sprit.model.station_model import Station, SortBy
 from sprit.model.stations_search_list_map_model import StationsSearchListMapModel
 
 class StationsSearchListMapView(customtkinter.CTkFrame):
@@ -11,23 +12,24 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             id="1",
             name="Station 1",
             brand="Fachhochschule Südwestfalen",
-            street="Frauenstuhlweg",
-            place="Iserlohn",
+            street="Semesterprojekt - Gruppe:",
+            place="Programmierung",
             lat=51.3683433,
             lng=7.6847851,
-            dist=11,
-            price=1.11,
-            diesel=1.11,
-            e5=1.11,
-            e10=1.11,
+            dist=10,
+            price=1.0,
+            diesel=1.0,
+            e5=1.0,
+            e10=1.0,
             isOpen=True,
-            houseNumber="31",
+            houseNumber="A3-3",
             postCode="12345"
     )
 
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
+        self.master = master
         self.model = StationsSearchListMapModel()
         self.search_model = StationsSearchModel()
 
@@ -83,20 +85,29 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
     def search_event(self, event=None):
         self.map_widget.set_address(self.entry.get())
 
-        self.model.stations = self.search_model.get_nearby_stations(self.entry.get(), 5, self.model.sprit_type, SortBy.price)
-        self.model.sort_stations_by(self.price_distance_button.get())
-        self.stations_list.update_view(self.model.stations)
+        try:
+            self.model.stations = self.search_model.get_nearby_stations(self.entry.get(), 5, SortBy.distance, self.model.sprit_type)
+            self.model.sort_stations_by(self.price_distance_button.get())
+            self.stations_list.update_view(self.model.stations)
+        except GeocodingError:
+            self.show_error("Adresse konnte nicht gefunden werden. Bitte überprüfen Sie Ihre Eingabe und versuchen es nochmal!")
 
         for station in self.model.stations:
             self.map_widget.set_marker(station.lat, station.lng, text=station.brand)
 
-    def on_station_card_click(self, station, event=None):
-        print(station.name)
+    def on_station_card_click(self, station, card, event=None):
+        if self.model.selected_card is not None:
+            self.model.selected_card.configure(border_width=0)
+        card.configure(border_width=2, border_color="white")
+        self.model.selected_card = card
+
         self.map_widget.set_position(station.lat, station.lng)
         self.map_widget.set_zoom(16)
 
     def set_sprit_type(self, event=None):
         self.model.set_sprit_type(self.sprit_type_button.get())
+        self.model.update_price_by_sprit_type()
+        self.stations_list.update_view(self.model.stations)
 
     def sorty_by(self, event=None):
         self.model.sort_stations_by(self.price_distance_button.get())
@@ -105,12 +116,14 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
     def start(self):
         self.mainloop()
 
+    def show_error(self, msg: str):
+       CTkMessagebox(title="Info", message=msg, header=True)
 
 if __name__ == "__main__":
     app = customtkinter.CTk()
     app.title("Sprit - Tankstellensuche")
     app.geometry("1280x1024")
-    app.minsize(1280, 1024)
+    app.minsize(1024, 768)
 
     # Configure the grid to expand
     app.grid_columnconfigure(0, weight=0)

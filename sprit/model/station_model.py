@@ -23,7 +23,7 @@ class Station:
         self.lat = lat
         self.lng = lng
         self.dist = dist
-        self.price: float = price
+        self.price = price
         self.diesel = diesel
         self.e5 = e5
         self.e10 = e10

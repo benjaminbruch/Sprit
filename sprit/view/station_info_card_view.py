@@ -12,6 +12,7 @@ class StationInfoCardView(customtkinter.CTkFrame):
     def __init__(self, master, model: StationInfoCardModel, **kwargs):
         super().__init__(master, **kwargs)
         self.model = model
+        self.selected = False
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -22,13 +23,13 @@ class StationInfoCardView(customtkinter.CTkFrame):
                                                   text_color=self.card_price_font_color,
                                                   fg_color=self.card_price_bg_color,
                                                   padx=10)
-        self.price_label.grid(row=0, column=0, padx=10, pady=10, sticky='ns')
+        self.price_label.grid(row=0, column=0, padx=10, pady=(15,10), sticky='ns')
 
         self.extra_info_label = customtkinter.CTkLabel(self, text=self.model.extra_info, font=('Arial', 10))
         self.extra_info_label.grid(row=1, column=0, sticky='w', padx=10, pady=(0, 10))
 
         self.company_address_frame = customtkinter.CTkFrame(self, fg_color=self.card_bg_color)
-        self.company_address_frame.grid(row=0, column=1, sticky='nsew', padx=(0, 10))
+        self.company_address_frame.grid(row=0, column=1, sticky='nsew', padx=(0, 10), pady=(5, 0))
 
         self.company_label = customtkinter.CTkLabel(self.company_address_frame,
                                                     text=self.model.company_name,

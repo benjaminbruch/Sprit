@@ -6,6 +6,7 @@ class StationsSearchListMapModel:
         self.stations: [Station] = []
         self.sprit_type = "e10"
         self.sort_by = "Preis"
+        self.selected_card = None
 
     def sort_stations_by(self, sort_by: str):
         if sort_by == "Entfernung":
@@ -20,3 +21,12 @@ class StationsSearchListMapModel:
             self.sprit_type = "e10"
         else:
             self.sprit_type = "diesel"
+
+    def update_price_by_sprit_type(self):
+        for station in self.stations:
+            if self.sprit_type == "e5":
+                station.price = station.e5
+            elif self.sprit_type == "e10":
+                station.price = station.e10
+            else:
+                station.price = station.diesel
