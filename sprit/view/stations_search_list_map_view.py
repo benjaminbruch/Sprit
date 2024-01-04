@@ -93,7 +93,9 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             self.show_error("Adresse konnte nicht gefunden werden. Bitte überprüfen Sie Ihre Eingabe und versuchen es nochmal!")
 
         for station in self.model.stations:
-            self.map_widget.set_marker(station.lat, station.lng, text=station.brand+" ("+str(station.price)+"€)")
+            marker = self.map_widget.set_marker(station.lat, station.lng, text=station.brand+" ("+str(station.price)+" €)", icon=self.model.get_gas_station_icon(station.brand))
+
+
 
     def on_station_card_click(self, station, card, event=None):
         if self.model.selected_card is not None:
@@ -102,7 +104,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.model.selected_card = card
 
         self.map_widget.set_position(station.lat, station.lng)
-        self.map_widget.set_zoom(16)
+        self.map_widget.set_zoom(18)
 
     def set_sprit_type(self, event=None):
         self.model.set_sprit_type(self.sprit_type_button.get())
@@ -117,7 +119,8 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.mainloop()
 
     def show_error(self, msg: str):
-       CTkMessagebox(title="Info", message=msg, header=True)
+        CTkMessagebox(title="Info", message=msg, header=True)
+
 
 if __name__ == "__main__":
     app = customtkinter.CTk()

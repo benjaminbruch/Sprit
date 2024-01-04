@@ -1,4 +1,5 @@
 from sprit.model.station_model import Station
+from PIL import Image, ImageTk
 
 class StationsSearchListMapModel:
 
@@ -30,3 +31,11 @@ class StationsSearchListMapModel:
                 station.price = station.e10
             else:
                 station.price = station.diesel
+
+    def get_gas_station_icon(self, station_name) -> ImageTk.PhotoImage:
+        try:
+            img = Image.open("../resources/stations_icons/"+station_name+".png")
+        except:
+            img = Image.open("../resources/stations_icons/gas_station_icon.png")
+        photo = ImageTk.PhotoImage(img)
+        return photo
