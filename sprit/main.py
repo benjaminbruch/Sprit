@@ -1,10 +1,9 @@
-from model.search_for_stations_model import SearchForStationsModel
-from view.search_for_stations_view import SearchForStationsView
+import customtkinter
+from sprit.controller.stations_list_map_controller import StationsListMapController
 
 def main():
-    model = SearchForStationsModel()
-    view = SearchForStationsView(model)
-    view.run()
+    controller = StationsListMapController()
+    controller.start()
 
 if __name__ == "__main__":
     main()

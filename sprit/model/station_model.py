@@ -1,5 +1,13 @@
+from enum import Enum
+
+
+class SortBy(Enum):
+    distance = "dist"
+    price = "price"
+
+
 class Station:
-    def __init__(self, id, name, brand, street, place, lat, lng, dist, diesel, e5, e10, isOpen, houseNumber, postCode):
+    def __init__(self, id, name, brand, street, place, lat, lng, dist, price=None, diesel=None, e5=None, e10=None, isOpen=True, houseNumber=None, postCode=None):
         self.id = id
         self.name = name
         self.brand = brand
@@ -8,6 +16,7 @@ class Station:
         self.lat = lat
         self.lng = lng
         self.dist = dist
+        self.price = price
         self.diesel = diesel
         self.e5 = e5
         self.e10 = e10

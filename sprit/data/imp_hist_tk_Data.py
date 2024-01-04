@@ -1,11 +1,11 @@
 import csv
 import sqlite3
-from resources.credentials import Credentials
 
 # Pfad zur CSV-Datei und SQLite-Datenbank
 prices_file = '/Users/joerg/Programming/AKI/KI Programmierung/Sprit/sprit/data/2023-12-01-prices.csv'
 stations_file = '/Users/joerg/Programming/AKI/KI Programmierung/Sprit/sprit/data/2023-12-01-stations.csv'
 sqlite_db = '/Users/joerg/Programming/AKI/KI Programmierung/Sprit/sprit/data/tk_hist.db'
+
 
 # Funktion zum Erstellen einer SQLite-Datenbank und Tabelle
 def create_tables():
@@ -45,6 +45,7 @@ def create_tables():
     conn.commit()
     
     conn.close()
+
 
 # Funktion zum Einfügen von Daten aus der CSV-Datei in die SQLite-Datenbank
 def insert_data_from_csv():
