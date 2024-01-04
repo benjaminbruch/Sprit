@@ -1,13 +1,6 @@
 from enum import Enum
 
 
-class SpritType(Enum):
-    e5 = "e5"
-    e10 = "e10"
-    diesel = "diesel"
-    all = "all"
-
-
 class SortBy(Enum):
     distance = "dist"
     price = "price"

@@ -6,6 +6,7 @@ from sprit.model.stations_search_model import StationsSearchModel, GeocodingErro
 from sprit.model.station_model import Station, SortBy
 from sprit.model.stations_search_list_map_model import StationsSearchListMapModel
 
+
 class StationsSearchListMapView(customtkinter.CTkFrame):
 
     example_station = Station(
@@ -93,7 +94,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             self.show_error("Adresse konnte nicht gefunden werden. Bitte überprüfen Sie Ihre Eingabe und versuchen es nochmal!")
 
         for station in self.model.stations:
-            marker = self.map_widget.set_marker(station.lat, station.lng, text=station.brand+" ("+str(station.price)+" €)", icon=self.model.get_gas_station_icon(station.brand))
+            marker = self.map_widget.set_marker(station.lat, station.lng, text=station.brand+" ("+str(station.price)+" €)", icon=self.model.get_gas_station_icon(station.brand), text_color="black")
 
 
 
