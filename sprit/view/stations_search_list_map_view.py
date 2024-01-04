@@ -94,8 +94,8 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             self.show_error("Adresse konnte nicht gefunden werden. Bitte überprüfen Sie Ihre Eingabe und versuchen es nochmal!")
 
         for station in self.model.stations:
-            marker = self.map_widget.set_marker(station.lat, station.lng, text=station.brand+" ("+str(station.price)+" €)", icon=self.model.get_gas_station_icon(station.brand), text_color="black")
-
+            self.map_widget.set_marker(station.lat, station.lng, text=station.brand+" ("+str(station.price)+" €)", icon=self.model.get_gas_station_icon(station.brand), text_color="black")
+        
 
 
     def on_station_card_click(self, station, card, event=None):
@@ -121,18 +121,3 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
 
     def show_error(self, msg: str):
         CTkMessagebox(title="Info", message=msg, header=True)
-
-
-if __name__ == "__main__":
-    app = customtkinter.CTk()
-    app.title("Sprit - Tankstellensuche")
-    app.geometry("1280x1024")
-    app.minsize(1024, 768)
-
-    # Configure the grid to expand
-    app.grid_columnconfigure(0, weight=0)
-    app.grid_columnconfigure(1, weight=1)
-    app.grid_rowconfigure(0, weight=1)
-
-    view = StationsSearchListMapView(app)
-    view.start()
