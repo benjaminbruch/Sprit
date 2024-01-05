@@ -109,6 +109,15 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.search_button.grid(row=0, column=1, sticky="w", padx=(20, 0), pady=(20, 20))
         self.map_widget.set_address("Deutschland")
 
+    def select_first_station(self):
+        """
+        Select the first station from the list and zoom in on the map.
+        """
+        if self.model.stations:
+            first_station = self.model.stations[0]
+            first_card = self.stations_list.cards[0]
+            self.on_station_card_click(first_station, first_card)
+
     def search_event(self, event=None):
         """
         Handle the search event, updating the map and station list based on the user's input.
@@ -134,6 +143,9 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             self.map_widget.set_marker(station.lat, station.lng, text=station.brand + " (" + str(station.price) + " €)",
                                        icon=self.model.get_gas_station_icon(station.brand), text_color="black")
 
+            # Select the first station after loading and displaying the stations
+            self.select_first_station()
+
     def on_station_card_click(self, station, card, event=None):
         """
         Handle clicks on station cards, highlighting the selected station and updating the map view.
@@ -144,8 +156,9 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             event: The event triggering this method, default is None.
         """
         # Unhighlight previous selection, if any
-        if self.model.selected_card is not None:
+        if self.model.selected_card is not None and self.model.selected_card.winfo_exists():
             self.model.selected_card.configure(border_width=0)
+
 
         # Highlight the selected card and update the model
         card.configure(border_width=2, border_color="white")

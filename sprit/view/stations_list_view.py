@@ -22,6 +22,7 @@ class StationsListView(customtkinter.CTkScrollableFrame):
             **kwargs: Arbitrary keyword arguments for the CTkScrollableFrame.
         """
         super().__init__(master, **kwargs)
+        self.cards = []
         self.on_station_card_click = on_station_card_click
         self.selected_card = None  # Tracks the currently selected station card
 
@@ -32,9 +33,15 @@ class StationsListView(customtkinter.CTkScrollableFrame):
         Args:
             stations: A list of station objects to be displayed.
         """
+        for card in self.cards:
+            card.destroy()
+        self.cards = []
+
         for i, station in enumerate(stations):
+
             # Create an information card view for each station
             station_info_card = StationInfoCardView(self, StationInfoCardModel(station), fg_color='#4e5d77')
+            self.cards.append(station_info_card)
             station_info_card.grid(row=i, column=0, padx=10, pady=(10, 10), sticky="news")
 
             # Bind a click event to each card for interaction

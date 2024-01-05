@@ -26,10 +26,14 @@ class StationsSearchListMapModel:
         Args:
             sort_by: A string indicating the sorting criterion ("Entfernung" for distance, others for price).
         """
-        if sort_by == "Entfernung":
-            self.stations = sorted(self.stations, key=lambda station: station.dist, reverse=False)
-        else:
-            self.stations = sorted(self.stations, key=lambda station: station.price, reverse=False)
+        if sort_by == "price":
+            self.stations = sorted(self.stations,
+                                   key=lambda station: float('inf') if station.price is None else station.price,
+                                   reverse=False)
+        elif sort_by == "distance":
+            self.stations = sorted(self.stations,
+                                   key=lambda station: float('inf') if station.distance is None else station.distance,
+                                   reverse=False)
 
     def set_sprit_type(self, sprit_type: str):
         """
