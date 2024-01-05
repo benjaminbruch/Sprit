@@ -26,13 +26,14 @@ class StationsSearchListMapModel:
         Args:
             sort_by: A string indicating the sorting criterion ("Entfernung" for distance, others for price).
         """
-        if sort_by == "price":
+        print(sort_by)
+        if sort_by == "Preis":
             self.stations = sorted(self.stations,
                                    key=lambda station: float('inf') if station.price is None else station.price,
                                    reverse=False)
-        elif sort_by == "distance":
+        elif sort_by == "Entfernung":
             self.stations = sorted(self.stations,
-                                   key=lambda station: float('inf') if station.distance is None else station.distance,
+                                   key=lambda station: float('inf') if station.dist is None else station.dist,
                                    reverse=False)
 
     def set_sprit_type(self, sprit_type: str):
@@ -73,8 +74,9 @@ class StationsSearchListMapModel:
         """
         try:
             img = Image.open(f"sprit/resources/stations_icons/{station_name}.png")
-        except FileNotFoundError:
+        except FileNotFoundError as e:
             # If specific station icon is not found, use a default icon
+            print(e)
             img = Image.open("sprit/resources/stations_icons/gas_station_icon.png")
         photo = ImageTk.PhotoImage(img)
         return photo
