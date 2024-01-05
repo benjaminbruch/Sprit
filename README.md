@@ -10,7 +10,9 @@
 * [Installation](#Installation)
 * [Benutzung](#Benutzung)
 * [Vorgehensweise im Projekt](#Vorgehensweise-im-Projekt)
+* [Hinweise](#Hinweise)
 * [Anerkennung](#Anerkennung)
+
 
 <!-- Features -->
 ## Funktionen
@@ -49,8 +51,9 @@ Für die Übersicht und Projektplanung setzten wir auf Trello. Dieses Tool half 
 
 Insgesamt bildeten diese Entscheidungen und Tools die Grundlage für eine strukturierte und effiziente Entwicklung unserer App. Wir waren in der Lage, ein robustes Produkt zu schaffen, das auf den Prinzipien guter Softwareentwicklungspraktiken basiert.
 
-
-
+<!-- Hinweise -->
+## Hinweise 
+Für die Erstellung dieser Readme und der Dokumentation inklusive der Inline-Kommentare sowie der Unit-Tests wurde die Hilfe von Github Copilot & OpenAI ChatGPT in Anspruch genommen. Desweiteren wurden diese Tools auch zum Auflösen und Beheben von Fehlermeldungen verwendet.
 <!-- ACKNOWLEDGEMENTS -->
 ## Anerkennung 
 * [Tankerkönig](https://tankerkoenig.de)
@@ -59,6 +62,8 @@ Insgesamt bildeten diese Entscheidungen und Tools die Grundlage für eine strukt
 * [PyCharm](https://www.jetbrains.com/de-de/pycharm/)
 * [Visual Studio Code](https://code.visualstudio.com)
 * [Github](https://github.com)
+* [GithubCopilot](https://copilot.github.com)
+* [ChatGPT](https://chat.openai.com/)
 
 
 
