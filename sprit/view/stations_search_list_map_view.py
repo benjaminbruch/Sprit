@@ -2,10 +2,12 @@ import customtkinter
 from tkintermapview import TkinterMapView
 from CTkMessagebox import CTkMessagebox
 from sprit.view.stations_list_view import StationsListView
+from sprit.view.station_data_analytics_view import StationDataAnalyticsView
 from sprit.model.stations_search_model import StationsSearchModel, GeocodingError
 from sprit.model.station_model import Station, SortBy
 from sprit.model.stations_search_list_map_model import StationsSearchListMapModel
-
+from sprit.model.station_data_analytics_model import StationDataAnalyticsModel
+from sprit.resources.credentials import Credentials
 
 class StationsSearchListMapView(customtkinter.CTkFrame):
     """
@@ -49,6 +51,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.master = master
         self.model = StationsSearchListMapModel()
         self.search_model = StationsSearchModel()
+        self.station_data_analytics_model = StationDataAnalyticsModel(Credentials.db_path)
 
         # Configure grid layout for master
         master.grid_columnconfigure(0, weight=1)
@@ -92,10 +95,6 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.frame_right.grid_columnconfigure(1, weight=0)
         self.frame_right.grid_columnconfigure(2, weight=1)
 
-        # Initialize and setup map widget
-        self.map_widget = TkinterMapView(self.frame_right, corner_radius=0)
-        self.map_widget.grid(row=1, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(0, 0))
-
         # Setup search entry and button
         self.entry = customtkinter.CTkEntry(master=self.frame_right,
                                             placeholder_text="Adresse eingeben")
@@ -107,7 +106,20 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
                                                      width=90,
                                                      command=self.search_event)
         self.search_button.grid(row=0, column=1, sticky="w", padx=(20, 0), pady=(20, 20))
+
+        # Initialize and setup map widget
+        self.map_widget = TkinterMapView(self.frame_right, corner_radius=0)
+        self.map_widget.grid(row=1, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(0, 0))
         self.map_widget.set_address("Deutschland")
+
+        # Setup station data analytics frame
+        self.station_data_analytics_view = StationDataAnalyticsView(self.frame_right, self.station_data_analytics_model)
+        self.station_data_analytics_view.grid(row=2, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(0, 0))
+        self.station_data_analytics_view.grid_rowconfigure(0, weight=1)
+        self.station_data_analytics_view.grid_columnconfigure(0, weight=1)
+
+
+
 
     def select_first_station(self):
         """

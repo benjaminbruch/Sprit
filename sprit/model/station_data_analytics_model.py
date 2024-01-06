@@ -8,7 +8,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 
 
-class FuelPriceAnalyzer:
+class StationDataAnalyticsModel:
     def __init__(self, db_path):
         self.db_path = db_path
         self.conn = None
@@ -248,7 +248,7 @@ db_path = '/Users/Janjira Boonkhamsaen/Desktop/tk_hist.db' #dynamisch anpassen
 station_uuid = '005056ba-7cb6-1ed2-bceb-aab58f050d43' #Dynamisch anpassen!!! get from selection 
 fuel_type = 'diesel' #Dynamisch anpassen!!! get from selection 
 
-fuel_analyzer = FuelPriceAnalyzer(db_path)
+fuel_analyzer = StationDataAnalyticsModel(db_path)
 
 if fuel_analyzer.connect_to_hist_database():
     data_frame = fuel_analyzer.retrieve_data(station_uuid)
@@ -271,120 +271,120 @@ if fuel_analyzer.connect_to_hist_database():
      
     fuel_analyzer.close_connection()
     
- #GUI  
-root = tk.Tk()
-
-
-############################################################################################
-# Styling
-s = ttk.Style()
-s.configure('mainFrame.TFrame', background = '#3A3845')
-s.configure('mainFrame.TLabel',
-            background = '#3A3845',
-            font = ('Helvetica',30),
-            foreground = 'white',
-            padding = (15,6,15,6)
-            )
-            
-s.configure('currentPriceFrame.TFrame', background = '#3A3845')
-s.configure('avgPriceFrame.TFrame', background = '#3A3845')
-s.configure('suggestionFrame.TFrame', background = '#3A3845')
-
-s.configure('kpiLabel.TLabel',
-            background='#3A3845',
-            font=('Helvetica', 12),
-            foreground='white',
-            padding=(0, 0, 0, 0)
-            )
-
-s.configure('valueLabel.TLabel',
-            background='#3A3845',
-            font=('Helvetica', 24),
-            foreground='white',
-            padding=(0, 0, 0, 0)
-            )
-
-
-
-
-
-
-s.configure('chartFrame.TFrame', background = '#3A3845')
-
-
-mf_width = 1200
-mf_height = 80
-
-pf_width = 380
-pf_height = 150
-
-cf_width = 1200
-cf_height = 400
-
-
-# Widget
-# Darstellung Tankstelle
-selected_station = 'JET, Provinzialstr. 99, 44388 Dortmund' #Dynamisch anpassen!!! get from selection 
-mainFrame = ttk.Frame(root, width= mf_width, height= mf_height, style= 'mainFrame.TFrame')
-mainFrame.grid(padx= 10, pady= 5, columnspan=3)
-mainLabel = ttk.Label(root, text= selected_station, style='mainFrame.TLabel')
-mainLabel.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
-
-# Darstellung Aktueller Preis
-current_price = todays_price
-currentPriceFrame = ttk.Frame(root, width=pf_width, height=pf_height, style='currentPriceFrame.TFrame')
-currentPriceFrame.grid(padx=10, pady=5, row=1, column=0, sticky='NSEW')
-currentPriceLabel = ttk.Label(currentPriceFrame, text='Aktueller Preis', style='kpiLabel.TLabel')
-currentPriceLabel.grid(row=0, column=0, columnspan=2, pady=5, sticky='n')
-currentPriceValue = ttk.Label(currentPriceFrame, text=f'{current_price:.2f} EUR', style='valueLabel.TLabel')
-currentPriceValue.grid(row=1, column=0, columnspan=2, pady=5, sticky='n')
-
-
-# Darstellung Durchschnittspreis 
-avg_price_cur = avg_price
-avgPriceFrame = ttk.Frame(root, width=pf_width, height=pf_height, style='avgPriceFrame.TFrame')
-avgPriceFrame.grid(padx=10, pady=5, row=1, column=1, sticky='NSEW')
-avgPriceLabel = ttk.Label(avgPriceFrame, text='AVG Preis', style='kpiLabel.TLabel')
-avgPriceLabel.grid(row=0, column=0, columnspan=2, pady=5, sticky='n')
-avgPriceValue = ttk.Label(avgPriceFrame, text=f'{avg_price_cur:.2f} EUR', style='valueLabel.TLabel')
-avgPriceValue.grid(row=1, column=0, columnspan=2, pady=5, sticky='n')
-
-
-# Darstellung Empfehlung 
-suggest_cur = suggestion
-suggestionFrame = ttk.Frame(root, width=pf_width, height=pf_height, style='suggestionFrame.TFrame')
-suggestionFrame.grid(padx=10, pady=5, row=1, column=2, sticky='NSEW')
-suggestionLabel = ttk.Label(suggestionFrame, text='Empfehlung', style='kpiLabel.TLabel')
-suggestionLabel.grid(row=0, column=0, columnspan=2, pady=5)
-suggestionValue = ttk.Label(suggestionFrame, text=f'{suggest_cur}', style='valueLabel.TLabel')
-suggestionValue.grid(row=1, column=0, columnspan=2, pady=5)
-
-#Chartt TODO: Tomorrow
-chartFrame = ttk.Frame(root, width= cf_width, height= cf_height, style= 'chartFrame.TFrame')
-chartFrame.grid(padx= 10, pady= 5, columnspan=3, sticky='NSEW')
-fuel_analyzer.visualize_data(dates, prices, fuel_type, chartFrame)
-
-###...
-#Barchart in chart frame einbetteln
-
-# Grid Config
-root.columnconfigure(0, weight=1)
-root.columnconfigure(1, weight=1)
-root.columnconfigure(2, weight=1)
-root.rowconfigure(0, weight=1)
-mainFrame.columnconfigure(0, weight=1)
-
-currentPriceFrame.columnconfigure(0, weight=1)
-currentPriceFrame.columnconfigure(1, weight=1)
-
-avgPriceFrame.columnconfigure(0, weight=1)
-avgPriceFrame.columnconfigure(1, weight=1)
-
-suggestionFrame.columnconfigure(0, weight=1)
-suggestionFrame.columnconfigure(1, weight=1)
-
-chartFrame.columnconfigure(0, weight=1)
-
-
-root.resizable(width= False, height= False)
-root.mainloop()
+#  #GUI
+# root = tk.Tk()
+#
+#
+# ############################################################################################
+# # Styling
+# s = ttk.Style()
+# s.configure('mainFrame.TFrame', background = '#3A3845')
+# s.configure('mainFrame.TLabel',
+#             background = '#3A3845',
+#             font = ('Helvetica',30),
+#             foreground = 'white',
+#             padding = (15,6,15,6)
+#             )
+#
+# s.configure('currentPriceFrame.TFrame', background = '#3A3845')
+# s.configure('avgPriceFrame.TFrame', background = '#3A3845')
+# s.configure('suggestionFrame.TFrame', background = '#3A3845')
+#
+# s.configure('kpiLabel.TLabel',
+#             background='#3A3845',
+#             font=('Helvetica', 12),
+#             foreground='white',
+#             padding=(0, 0, 0, 0)
+#             )
+#
+# s.configure('valueLabel.TLabel',
+#             background='#3A3845',
+#             font=('Helvetica', 24),
+#             foreground='white',
+#             padding=(0, 0, 0, 0)
+#             )
+#
+#
+#
+#
+#
+#
+# s.configure('chartFrame.TFrame', background = '#3A3845')
+#
+#
+# mf_width = 1200
+# mf_height = 80
+#
+# pf_width = 380
+# pf_height = 150
+#
+# cf_width = 1200
+# cf_height = 400
+#
+#
+# # Widget
+# # Darstellung Tankstelle
+# selected_station = 'JET, Provinzialstr. 99, 44388 Dortmund' #Dynamisch anpassen!!! get from selection
+# mainFrame = ttk.Frame(root, width= mf_width, height= mf_height, style= 'mainFrame.TFrame')
+# mainFrame.grid(padx= 10, pady= 5, columnspan=3)
+# mainLabel = ttk.Label(root, text= selected_station, style='mainFrame.TLabel')
+# mainLabel.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
+#
+# # Darstellung Aktueller Preis
+# current_price = todays_price
+# currentPriceFrame = ttk.Frame(root, width=pf_width, height=pf_height, style='currentPriceFrame.TFrame')
+# currentPriceFrame.grid(padx=10, pady=5, row=1, column=0, sticky='NSEW')
+# currentPriceLabel = ttk.Label(currentPriceFrame, text='Aktueller Preis', style='kpiLabel.TLabel')
+# currentPriceLabel.grid(row=0, column=0, columnspan=2, pady=5, sticky='n')
+# currentPriceValue = ttk.Label(currentPriceFrame, text=f'{current_price:.2f} EUR', style='valueLabel.TLabel')
+# currentPriceValue.grid(row=1, column=0, columnspan=2, pady=5, sticky='n')
+#
+#
+# # Darstellung Durchschnittspreis
+# avg_price_cur = avg_price
+# avgPriceFrame = ttk.Frame(root, width=pf_width, height=pf_height, style='avgPriceFrame.TFrame')
+# avgPriceFrame.grid(padx=10, pady=5, row=1, column=1, sticky='NSEW')
+# avgPriceLabel = ttk.Label(avgPriceFrame, text='AVG Preis', style='kpiLabel.TLabel')
+# avgPriceLabel.grid(row=0, column=0, columnspan=2, pady=5, sticky='n')
+# avgPriceValue = ttk.Label(avgPriceFrame, text=f'{avg_price_cur:.2f} EUR', style='valueLabel.TLabel')
+# avgPriceValue.grid(row=1, column=0, columnspan=2, pady=5, sticky='n')
+#
+#
+# # Darstellung Empfehlung
+# suggest_cur = suggestion
+# suggestionFrame = ttk.Frame(root, width=pf_width, height=pf_height, style='suggestionFrame.TFrame')
+# suggestionFrame.grid(padx=10, pady=5, row=1, column=2, sticky='NSEW')
+# suggestionLabel = ttk.Label(suggestionFrame, text='Empfehlung', style='kpiLabel.TLabel')
+# suggestionLabel.grid(row=0, column=0, columnspan=2, pady=5)
+# suggestionValue = ttk.Label(suggestionFrame, text=f'{suggest_cur}', style='valueLabel.TLabel')
+# suggestionValue.grid(row=1, column=0, columnspan=2, pady=5)
+#
+# #Chartt TODO: Tomorrow
+# chartFrame = ttk.Frame(root, width= cf_width, height= cf_height, style= 'chartFrame.TFrame')
+# chartFrame.grid(padx= 10, pady= 5, columnspan=3, sticky='NSEW')
+# fuel_analyzer.visualize_data(dates, prices, fuel_type, chartFrame)
+#
+# ###...
+# #Barchart in chart frame einbetteln
+#
+# # Grid Config
+# root.columnconfigure(0, weight=1)
+# root.columnconfigure(1, weight=1)
+# root.columnconfigure(2, weight=1)
+# root.rowconfigure(0, weight=1)
+# mainFrame.columnconfigure(0, weight=1)
+#
+# currentPriceFrame.columnconfigure(0, weight=1)
+# currentPriceFrame.columnconfigure(1, weight=1)
+#
+# avgPriceFrame.columnconfigure(0, weight=1)
+# avgPriceFrame.columnconfigure(1, weight=1)
+#
+# suggestionFrame.columnconfigure(0, weight=1)
+# suggestionFrame.columnconfigure(1, weight=1)
+#
+# chartFrame.columnconfigure(0, weight=1)
+#
+#
+# root.resizable(width= False, height= False)
+# root.mainloop()

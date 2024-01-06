@@ -26,7 +26,6 @@ class StationsSearchListMapModel:
         Args:
             sort_by: A string indicating the sorting criterion ("Entfernung" for distance, others for price).
         """
-        print(sort_by)
         if sort_by == "Preis":
             self.stations = sorted(self.stations,
                                    key=lambda station: float('inf') if station.price is None else station.price,
@@ -76,7 +75,6 @@ class StationsSearchListMapModel:
             img = Image.open(f"sprit/resources/stations_icons/{station_name}.png")
         except FileNotFoundError as e:
             # If specific station icon is not found, use a default icon
-            print(e)
             img = Image.open("sprit/resources/stations_icons/gas_station_icon.png")
         photo = ImageTk.PhotoImage(img)
         return photo
