@@ -372,6 +372,3 @@ chartFrame.columnconfigure(0, weight=1)
 
 root.resizable(width= False, height= False)
 root.mainloop()
-
-
-#test
