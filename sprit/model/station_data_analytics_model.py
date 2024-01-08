@@ -230,7 +230,7 @@ class StationDataAnalyticsModel:
 
         #ax.set_xlabel('Datum')
         ax.set_ylabel(f'Preis in EUR')
-        ax.set_title(f'Preisentwicklung - Kraftstoff: {fuel_type.upper()}')
+        ax.set_title(f'Preisentwicklung der letzen 30 Tage', color='white', fontsize=20, weight='bold')
         #ax.set_xticklabels(dates, rotation=90) #fontsize = 5
         ax.set_xticks = True
         
