@@ -199,47 +199,7 @@ class StationDataAnalyticsModel:
             
         return suggestion       
     
-    def visualize_data(self, dates, prices, fuel_type, frame):
-       
-        """
-        Erzeugt und zeigt ein Balkendiagramm der Kraftstoffpreise an.
-        
-        Parameters:
-            - dates (Tupel): Datum (eindeutig)
-            - prices (Tupel): Kraffstoffpreise (Median)       
 
-        Returns:
-            - ax (matplotlib.axes.Axes): Das erstellte Axes-Objekt
-        """
-        
-        #Diagramm mit fixe Größe erstellen
-        #width = 15
-        #heigh = 5
-
-
-        fig, ax = plt.subplots()#figsize =(width, heigh)
-        fig.set_facecolor('#323333')
-        ax.set_facecolor('#323333')
-
-        #Balkendiagramm erstellen
-        ax.bar(dates, prices, width=0.5, align='center', edgecolor='white', color="#4e5d78")
-        
-        #AVG Kraftstoffspreis im Diagramm abbilden
-        for i, price in zip(dates, prices):
-            ax.text(i, price + 0.00, f'{price:.2f}', ha='center', va='top', rotation=90, color= 'white')
-
-        #ax.set_xlabel('Datum')
-        ax.set_ylabel(f'Preis in EUR')
-        ax.set_title(f'Preisentwicklung der letzen 30 Tage', color='white', fontsize=20, weight='bold')
-        #ax.set_xticklabels(dates, rotation=90) #fontsize = 5
-        ax.set_xticks = True
-        
-        # FigureCanvasTkAgg erstellen und in das Frame einbinden
-        canvas = FigureCanvasTkAgg(fig, master=frame)
-        canvas_widget = canvas.get_tk_widget()
-        canvas_widget.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-
-    
 
         
 ############################################################################################

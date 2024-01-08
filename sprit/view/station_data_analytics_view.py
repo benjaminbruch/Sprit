@@ -1,4 +1,8 @@
 import customtkinter
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from sprit.model.station_data_analytics_model import StationDataAnalyticsModel
 
 class StationDataAnalyticsView(customtkinter.CTkFrame):
@@ -9,9 +13,48 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        self.prices = [1.24, 1.25, 1.26, 1.27, 1.28, 1.29, 1.30]
-        self.dates = ['1/1/2020', '1/2/2020', '1/3/2020', '1/4/2020', '1/5/2020', '1/6/2020', '1/7/2020']
+        #Mock data
+        self.prices = np.random.uniform(1.65, 1.70, 14)
+        self.dates =pd.date_range(start="2024-01-01", end="2024-01-14")
+        self.dates = self.dates.strftime("%d.%m")
 
         self.chart_frame = customtkinter.CTkFrame(self)
         self.chart_frame.grid(row=0, column=0, sticky='nsew')
-        self.model.visualize_data(self.dates, self.prices, "diesel", self.chart_frame)
+        self.create_chart(self.dates, self.prices, self.chart_frame)
+
+    def create_chart(self, dates, prices, frame):
+        min_price = min(prices) - 0.01
+        max_price = max(prices) + 0.01
+
+        fig, ax = plt.subplots()
+
+        fig.set_facecolor('#323333')
+        ax.set_facecolor('#323333')
+
+        ax.bar(dates, prices, width=0.8, align='center', color="#4e5d78")
+
+        ax.set_yticks([])
+        # Set the y-axis limits
+        ax.set_ylim([min_price, max_price])
+
+        # Display the price on top of each bar
+        for i, price in zip(dates, prices):
+            ax.text(i, price + 0.00, f'{price:.2f}', ha='center', va='bottom', color='white')
+
+        # Set the labels and title
+        ax.tick_params(axis='x', colors='white')
+        plt.xticks(rotation=45)
+
+        # Remove the frame
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+
+        # FigureCanvasTkAgg erstellen und in das Frame einbinden
+        canvas = FigureCanvasTkAgg(fig, master=frame)
+        canvas_widget = canvas.get_tk_widget()
+        canvas_widget.grid(row=0, column=0, sticky='nsew')
+        canvas_widget.grid_columnconfigure(index=0, weight=1)
+        canvas_widget.grid_propagate(False)  # Prevent the widget from changing its size due to its children
+        canvas_widget.configure(height=250)

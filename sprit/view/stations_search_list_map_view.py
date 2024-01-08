@@ -55,7 +55,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
 
         # Configure grid layout for master
         master.grid_columnconfigure(0, weight=1)
-        master.grid_columnconfigure(1, weight=3)
+        master.grid_columnconfigure(1, weight=1)
         master.grid_rowconfigure(0, weight=1)
 
         # Configure grid layout for this frame
@@ -89,11 +89,13 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.stations_list.update_view([self.example_station])
 
         # Setup grid layout for right frame
-        self.frame_right.grid_rowconfigure(1, weight=1)
-        self.frame_right.grid_rowconfigure(0, weight=0)
+        self.frame_right.grid_rowconfigure(0, weight=0)  # Search entry and button row
+        self.frame_right.grid_rowconfigure(1, weight=2)  # Map widget row
+        self.frame_right.grid_rowconfigure(2, weight=1)  # Analytics view row
         self.frame_right.grid_columnconfigure(0, weight=1)
-        self.frame_right.grid_columnconfigure(1, weight=0)
+        self.frame_right.grid_columnconfigure(1, weight=1)
         self.frame_right.grid_columnconfigure(2, weight=1)
+
 
         # Setup search entry and button
         self.entry = customtkinter.CTkEntry(master=self.frame_right,
@@ -114,7 +116,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
 
         # Setup station data analytics frame
         self.station_data_analytics_view = StationDataAnalyticsView(self.frame_right, self.station_data_analytics_model)
-        self.station_data_analytics_view.grid(row=2, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(20, 0))
+        self.station_data_analytics_view.grid(row=2, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(20, 0))
         self.station_data_analytics_view.grid_rowconfigure(0, weight=1)
         self.station_data_analytics_view.grid_columnconfigure(0, weight=1)
 
