@@ -215,16 +215,18 @@ class StationDataAnalyticsModel:
         #Diagramm mit fixe Größe erstellen
         #width = 15
         #heigh = 5
-        
-        fig, ax = plt.subplots()#figsize =(width, heigh)
 
+
+        fig, ax = plt.subplots()#figsize =(width, heigh)
+        fig.set_facecolor('#323333')
+        ax.set_facecolor('#323333')
 
         #Balkendiagramm erstellen
-        ax.bar(dates, prices, width=0.5, align='center', edgecolor='black')
+        ax.bar(dates, prices, width=0.5, align='center', edgecolor='white', color="#4e5d78")
         
         #AVG Kraftstoffspreis im Diagramm abbilden
         for i, price in zip(dates, prices):
-            ax.text(i, price + 0.00, f'{price:.2f}', ha='center', va='top', rotation=90, color = 'white')
+            ax.text(i, price + 0.00, f'{price:.2f}', ha='center', va='top', rotation=90, color= 'white')
 
         #ax.set_xlabel('Datum')
         ax.set_ylabel(f'Preis in EUR')

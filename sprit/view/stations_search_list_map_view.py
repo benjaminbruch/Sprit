@@ -114,7 +114,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
 
         # Setup station data analytics frame
         self.station_data_analytics_view = StationDataAnalyticsView(self.frame_right, self.station_data_analytics_model)
-        self.station_data_analytics_view.grid(row=2, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(0, 0))
+        self.station_data_analytics_view.grid(row=2, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(20, 0))
         self.station_data_analytics_view.grid_rowconfigure(0, weight=1)
         self.station_data_analytics_view.grid_columnconfigure(0, weight=1)
 
