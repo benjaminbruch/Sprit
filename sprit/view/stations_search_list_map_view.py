@@ -115,7 +115,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.map_widget.set_address("Deutschland")
 
         # Setup station data analytics frame
-        self.station_data_analytics_view = StationDataAnalyticsView(self.frame_right, self.station_data_analytics_model)
+        self.station_data_analytics_view = StationDataAnalyticsView(self.frame_right, self.station_data_analytics_model, fg_color='transparent')
         self.station_data_analytics_view.grid(row=2, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(20, 10))
         self.station_data_analytics_view.grid_rowconfigure(0, weight=1)
         self.station_data_analytics_view.grid_columnconfigure(0, weight=1)
