@@ -1,6 +1,5 @@
 import customtkinter
-import numpy as np
-import pandas as pd
+from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from sprit.model.station_data_analytics_model import StationDataAnalyticsModel
@@ -10,28 +9,50 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         super().__init__(master, **kwargs)
         self.model = model
 
+        self.thumb_icon = Image.open("sprit/resources/recommendation_icons/thumb_up_green.png") if self.model.is_recommended else Image.open(
+            "sprit/resources/recommendation_icons/thumb_down_red.png")
+
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
         #Mock data
-        self.prices = np.random.uniform(1.65, 1.70, 14)
-        self.dates =pd.date_range(start="2024-01-01", end="2024-01-14")
-        self.dates = self.dates.strftime("%d.%m")
+        self.chart_label_frame = customtkinter.CTkFrame(self)
+        self.chart_label_frame.grid(row=0, column=0, sticky='nsew')
 
-        self.chart_frame = customtkinter.CTkFrame(self)
-        self.chart_frame.grid(row=0, column=0, sticky='nsew')
-        self.create_chart(self.dates, self.prices, self.chart_frame)
+        self.chart_label = customtkinter.CTkLabel(self.chart_label_frame, text=f"Preisentwicklung ({self.model.dates[0]} - {self.model.dates[-1]})", font=("Arial", 16, "bold"), pady=10)
+        self.chart_label.grid(row=0, column=0, sticky='nsew', pady=(0, 10))
+
+        self.chart_frame = customtkinter.CTkFrame(self.chart_label_frame)
+        self.chart_frame.grid(row=1, column=0, sticky='nsew', pady=(0, 10))
+        self.create_chart(self.model.dates, self.model.prices, self.chart_frame)
 
 
         self.average_recommendation_frame = customtkinter.CTkFrame(self)
         self.average_recommendation_frame.grid(row=0, column=1, sticky='nsew')
 
-        self.average_price_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Durchschnittspreis: ", font=("Arial", 12))
-        self.average_price_label.grid(row=0, column=1, sticky='nsew')
+        self.average_price_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Durchschnittspreis", font=("Arial", 16, "bold"), pady=10)
+        self.average_price_label.grid(row=0, column=0, sticky='nsew', pady=(0, 10))
+        self.average_price_box = customtkinter.CTkLabel(self.average_recommendation_frame,
+                                                  text=self.model.avergage_price,
+                                                  font=('Digital-7', 48),
+                                                  text_color='#fabe02',
+                                                  fg_color='#323333',
+                                                  padx=10,
+                                                  pady=10)
+        self.average_price_box.grid(row=1, column=0, sticky='nsew', pady=(0, 10))
 
-        self.recommendation_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Empfehlung: ", font=("Arial", 12))
-        self.recommendation_label.grid(row=1, column=1, sticky='nsew')
+
+        self.recommendation_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Tankempfehlung", font=("Arial", 16, "bold"), pady=10)
+        self.recommendation_label.grid(row=2, column=0, sticky='nsew', pady=(0, 10))
+
+        self.recommendation_icon = customtkinter.CTkImage(self.thumb_icon, size=(64, 64))
+        self.recommendation_box = customtkinter.CTkLabel(self.average_recommendation_frame,
+                                                         image=self.recommendation_icon,
+                                                         text="",
+                                                         fg_color='#323333',
+                                                         pady=20)
+        self.recommendation_box.grid(row=3, column=0, sticky='nsew')
 
 
     def create_chart(self, dates, prices, frame):

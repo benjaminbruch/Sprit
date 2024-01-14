@@ -13,6 +13,12 @@ class StationDataAnalyticsModel:
         self.db_path = db_path
         self.conn = None
 
+        self.prices = np.random.uniform(1.65, 1.70, 14)
+        self.dates = pd.date_range(start="2024-01-01", end="2024-01-14")
+        self.dates = self.dates.strftime("%d.%m")
+        self.avergage_price = "{:.2f}".format(np.median(self.prices))
+        self.is_recommended = True
+
     def connect_to_hist_database(self):   
         """
         Diese Funktion Stellen Sie eine Verbindung zur historischen Datenbank her.
