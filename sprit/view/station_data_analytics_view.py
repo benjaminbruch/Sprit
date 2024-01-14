@@ -1,5 +1,5 @@
 import customtkinter
-from PIL import Image, ImageTk
+from PIL import Image
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from sprit.model.station_data_analytics_model import StationDataAnalyticsModel
@@ -45,12 +45,12 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         self.average_price_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Durchschnittspreis", font=("Arial", 20, "bold"), pady=10, fg_color="transparent")
         self.average_price_label.grid(row=0, column=0, sticky='nsew', pady=(0, 10))
         self.average_price_box = customtkinter.CTkLabel(self.average_recommendation_frame,
-                                                  text=self.model.avergage_price+' €',
-                                                  font=('Digital-7', 48),
-                                                  text_color='#fabe02',
-                                                  fg_color=self.box_background_color,
-                                                  padx=10,
-                                                  pady=10)
+                                                        text=self.model.average_price + ' €',
+                                                        font=('Digital-7', 48),
+                                                        text_color='#fabe02',
+                                                        fg_color=self.box_background_color,
+                                                        padx=10,
+                                                        pady=10)
         self.average_price_box.grid(row=1, column=0, sticky='nsew', pady=(0, 20))
 
         self.recommendation_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Tankempfehlung", font=("Arial", 20, "bold"), pady=10)
