@@ -95,7 +95,7 @@ class StationDataAnalyticsModel:
         avg_price = format(avg_price, '.2f')
 
         return avg_price
-    
+
     def calc_todays_price(self, prices):
         """
         Calculates today's price from a list of prices.

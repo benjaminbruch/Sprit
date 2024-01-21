@@ -10,6 +10,7 @@
 * [Installation](#Installation)
 * [Benutzung](#Benutzung)
 * [Vorgehensweise im Projekt](#Vorgehensweise-im-Projekt)
+* [Ausblick](#Ausblick)
 * [Hinweise](#Hinweise)
 * [Anerkennung](#Anerkennung)
 
@@ -39,7 +40,7 @@
 <!-- PLANNING -->
 ## Vorgehensweise im Projekt
 ![trello_screenshot.png](files%2Ftrello_screenshot.png)
-*Bildschrimfoto von unserem Trelloboard*
+*Bildschirmfoto von unserem Trelloboard*
 
 In unserem ersten Treffen haben wir die Grundlage für unser App-Projekt gelegt. Unser Fokus lag darauf, die Funktionen der App zu definieren und einen Plan für deren Umsetzung zu entwickeln. Dabei haben wir uns für die Programmierung mit Python und Tkinter entschieden, da diese Tools eine effiziente und flexible Entwicklung ermöglichen.
 
@@ -51,6 +52,17 @@ Für die Übersicht und Projektplanung setzten wir auf Trello. Dieses Tool half 
 
 Insgesamt bildeten diese Entscheidungen und Tools die Grundlage für eine strukturierte und effiziente Entwicklung unserer App. Wir waren in der Lage, ein robustes Produkt zu schaffen, das auf den Prinzipien guter Softwareentwicklungspraktiken basiert.
 
+<!-- Datenimport -->
+## Datenimport
+Aktuell wird für den Abruf der historischen Spritpreise und der Berechnung von Durchschnittspreis und Preisempfehlung eine lokale SQLite-Datenbank verwendet. Die Datenbank wird in der Datei `tk_hist.db` im Ordner `data` gespeichert. 
+Um die Daten zu aktualisieren, müssen die aktuellen CSV-Dateien von der Tankerkönig-Seite: https://dev.azure.com/tankerkoenig/_git/tankerkoenig-data?path=/prices geladen werden und in den Ordner `data/csv` kopiert werden. Anschließend kann das Skript `import_hist_tk_data.py` ausgeführt werden. Die Datenbank wird dann aktualisiert.
+
+Aufgrund der Limitierung von Github von Dateigrößen auf 50 MB konnten wir die Datenbank nicht in das Repository hochladen. Deswegen muss die Datenbank lokal erstellt werden.
+<!-- Ausblick -->
+## Ausblick
+In zukünftigen Updates planen wir, die aktuelle SQLite-Datenbank durch eine remote gehostete Datenbank zu ersetzen. Dies wird es uns ermöglichen, die Daten zentral zu speichern und von verschiedenen Geräten aus darauf zuzugreifen. Die Kommunikation mit der Datenbank wird über eine REST-Schnittstelle erfolgen, die eine standardisierte und effiziente Interaktion mit den Daten ermöglicht. Dieser Schritt wird die Skalierbarkeit und Flexibilität unserer Anwendung erheblich verbessern.
+
+Desweiteren planen wir, Caching-Techniken einzuführen, um die Leistung und Benutzererfahrung zu verbessern. Caching ermöglicht es uns, häufig abgerufene Daten temporär zu speichern, um zukünftige Anfragen schneller zu bedienen.
 <!-- Hinweise -->
 ## Hinweise 
 Für die Erstellung dieser Readme und der Dokumentation inklusive der Inline-Kommentare sowie der Unit-Tests wurde die Hilfe von Github Copilot & OpenAI ChatGPT in Anspruch genommen. Desweiteren wurden diese Tools auch zum Auflösen und Beheben von Fehlermeldungen verwendet.
