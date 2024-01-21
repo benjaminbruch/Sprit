@@ -2,10 +2,12 @@ import customtkinter
 from tkintermapview import TkinterMapView
 from CTkMessagebox import CTkMessagebox
 from sprit.view.stations_list_view import StationsListView
+from sprit.view.station_data_analytics_view import StationDataAnalyticsView
 from sprit.model.stations_search_model import StationsSearchModel, GeocodingError
 from sprit.model.station_model import Station, SortBy
 from sprit.model.stations_search_list_map_model import StationsSearchListMapModel
-
+from sprit.model.station_data_analytics_model import StationDataAnalyticsModel
+from sprit.resources.credentials import Credentials
 
 class StationsSearchListMapView(customtkinter.CTkFrame):
     """
@@ -49,10 +51,11 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.master = master
         self.model = StationsSearchListMapModel()
         self.search_model = StationsSearchModel()
+        self.station_data_analytics_model = StationDataAnalyticsModel(Credentials.db_path)
 
         # Configure grid layout for master
         master.grid_columnconfigure(0, weight=1)
-        master.grid_columnconfigure(1, weight=3)
+        master.grid_columnconfigure(1, weight=1)
         master.grid_rowconfigure(0, weight=1)
 
         # Configure grid layout for this frame
@@ -86,15 +89,12 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.stations_list.update_view([self.example_station])
 
         # Setup grid layout for right frame
-        self.frame_right.grid_rowconfigure(1, weight=1)
-        self.frame_right.grid_rowconfigure(0, weight=0)
+        self.frame_right.grid_rowconfigure(0, weight=0)  # Search entry and button row
+        self.frame_right.grid_rowconfigure(1, weight=2)  # Map widget row
+        self.frame_right.grid_rowconfigure(2, weight=1)  # Analytics view row
         self.frame_right.grid_columnconfigure(0, weight=1)
-        self.frame_right.grid_columnconfigure(1, weight=0)
+        self.frame_right.grid_columnconfigure(1, weight=1)
         self.frame_right.grid_columnconfigure(2, weight=1)
-
-        # Initialize and setup map widget
-        self.map_widget = TkinterMapView(self.frame_right, corner_radius=0)
-        self.map_widget.grid(row=1, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(0, 0))
 
         # Setup search entry and button
         self.entry = customtkinter.CTkEntry(master=self.frame_right,
@@ -107,7 +107,17 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
                                                      width=90,
                                                      command=self.search_event)
         self.search_button.grid(row=0, column=1, sticky="w", padx=(20, 0), pady=(20, 20))
+
+        # Initialize and setup map widget
+        self.map_widget = TkinterMapView(self.frame_right, corner_radius=0)
+        self.map_widget.grid(row=1, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(0, 0))
         self.map_widget.set_address("Deutschland")
+
+        # Setup station data analytics frame
+        self.station_data_analytics_view = StationDataAnalyticsView(self.frame_right, self.station_data_analytics_model, fg_color='transparent')
+        self.station_data_analytics_view.grid(row=2, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(20, 10))
+        self.station_data_analytics_view.grid_rowconfigure(0, weight=1)
+        self.station_data_analytics_view.grid_columnconfigure(0, weight=1)
 
     def select_first_station(self):
         """
@@ -143,8 +153,9 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             self.map_widget.set_marker(station.lat, station.lng, text=station.brand + " (" + str(station.price) + " €)",
                                        icon=self.model.get_gas_station_icon(station.brand), text_color="black")
 
-            # Select the first station after loading and displaying the stations
-            self.select_first_station()
+
+        # Select the first station after loading and displaying the stations
+        self.select_first_station()
 
     def on_station_card_click(self, station, card, event=None):
         """
@@ -155,10 +166,9 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             card: The card widget that was clicked.
             event: The event triggering this method, default is None.
         """
-        # Unhighlight previous selection, if any
+        # Deselect previous selection, if any
         if self.model.selected_card is not None and self.model.selected_card.winfo_exists():
             self.model.selected_card.configure(border_width=0)
-
 
         # Highlight the selected card and update the model
         card.configure(border_width=2, border_color="white")
@@ -167,6 +177,9 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         # Update map position and zoom to the selected station
         self.map_widget.set_position(station.lat, station.lng)
         self.map_widget.set_zoom(18)
+
+        # Update the station data analytics view
+        self.station_data_analytics_view.update_view(station.id, self.model.sprit_type)
 
     def set_sprit_type(self, event=None):
         """
@@ -202,4 +215,4 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         Args:
             msg: The message string to be displayed.
         """
-        CTkMessagebox(title="Info", message=msg, header=True)
+        CTkMessagebox(master= self.master, title="Info", message=msg, header=True)

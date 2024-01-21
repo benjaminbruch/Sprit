@@ -68,4 +68,4 @@ class StationInfoCardView(customtkinter.CTkFrame):
         self.distance_label = customtkinter.CTkLabel(self,
                                                      text=str(self.model.distance) + " km",
                                                      font=('Arial', 12))
-        self.distance_label.grid(row=1, column=2, sticky='e', padx=(0, 10), pady=(0, 10))
+        self.distance_label.grid(row=1, column=1, sticky='e', padx=(0, 10), pady=(0, 10))
