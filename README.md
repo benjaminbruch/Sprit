@@ -29,7 +29,7 @@
 ## Installation
 Es gibt 2 Möglichkeiten die App zu installieren:
 
-a) Die App kann auf Github unter "Release" für die jeweilige Plattform heruntergeladen werden.
+a) Die App kann auf Github unter "Releases" für die jeweilige Plattform heruntergeladen werden.
 
 b) Die App kann auch über den Quellcode installiert werden. Dazu muss das Repository geklont werden. Danach sollte in einer Virtuellen Umgebung die Datei `requirements.txt` installiert werden. 
 Abschließend kann die Datei `main.py` ausgeführt werden.
