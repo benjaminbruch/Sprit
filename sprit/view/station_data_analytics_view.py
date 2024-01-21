@@ -27,7 +27,8 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         self.chart_label_frame.grid_rowconfigure(1, weight=1)
         self.chart_label_frame.grid_columnconfigure(0, weight=1)
 
-        self.chart_label = customtkinter.CTkLabel(self.chart_label_frame, text=f"Preisentwicklung in €", font=("Arial", 24, "bold"), pady=10, fg_color="transparent")
+        self.chart_label = customtkinter.CTkLabel(self.chart_label_frame, text=f"Preisentwicklung in €",
+                                                  font=("Arial", 24, "bold"), pady=10, fg_color="transparent")
         self.chart_label.grid(row=0, column=0, sticky='nsew', pady=(0, 10))
 
         self.chart_frame = customtkinter.CTkFrame(self.chart_label_frame, fg_color=self.frame_background_color)
@@ -42,7 +43,8 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         self.average_recommendation_frame.grid_rowconfigure(1, weight=1)
         self.average_recommendation_frame.grid_columnconfigure(0, weight=1)
 
-        self.average_price_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Durchschnittspreis", font=("Arial", 20, "bold"), pady=10, fg_color="transparent")
+        self.average_price_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Durchschnittspreis",
+                                                          font=("Arial", 20, "bold"), pady=10, fg_color="transparent")
         self.average_price_label.grid(row=0, column=0, sticky='nsew', pady=(0, 10))
         self.average_price_box = customtkinter.CTkLabel(self.average_recommendation_frame,
                                                         text=self.model.average_price + ' €',
@@ -53,7 +55,8 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
                                                         pady=10)
         self.average_price_box.grid(row=1, column=0, sticky='nsew', pady=(0, 20))
 
-        self.recommendation_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Tankempfehlung", font=("Arial", 20, "bold"), pady=10)
+        self.recommendation_label = customtkinter.CTkLabel(self.average_recommendation_frame, text="Tankempfehlung",
+                                                           font=("Arial", 20, "bold"), pady=10)
         self.recommendation_label.grid(row=2, column=0, sticky='nsew', pady=(0, 20))
 
         self.recommendation_icon = customtkinter.CTkImage(self.thumb_icon, size=(64, 64))
@@ -101,3 +104,14 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         canvas_widget.grid_columnconfigure(index=0, weight=1)
         canvas_widget.grid_propagate(False)  # Prevent the widget from changing its size due to its children
         canvas_widget.configure(height=150)
+
+        plt.close(fig)
+
+    def update_view(self, station_id, fuel_type):
+        self.model.update_data(station_id, fuel_type)
+        self.create_chart(self.model.dates, self.model.prices, self.chart_frame)
+
+        self.thumb_icon = Image.open("sprit/resources/recommendation_icons/thumb_up_green.png") if (
+            self.model.is_recommended) else Image.open(
+            "sprit/resources/recommendation_icons/thumb_down_red.png")
+

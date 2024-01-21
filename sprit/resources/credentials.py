@@ -6,9 +6,7 @@ class Credentials:
     usr_agent = "FH_SWF"
 
     # Path to historical database
-    db_path = "sprt/data/tk_hist.db"
+    db_path = "sprit/data/tk_hist.db"
 
-    # Path to CSV prices file
-    csv_prices_path = "sprit/data/csv"
 
 

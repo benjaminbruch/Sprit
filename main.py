@@ -5,7 +5,7 @@ def main():
     app = customtkinter.CTk()
     app.title("Sprit - Die Tankstellensuche")
     app.geometry("1920*1080")
-    app.minsize(1600, 900)
+    app.minsize(1200, 600)
 
     # Configure the grid to expand
     app.grid_columnconfigure(0, weight=0)

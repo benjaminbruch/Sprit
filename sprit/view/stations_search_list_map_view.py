@@ -182,6 +182,9 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.map_widget.set_position(station.lat, station.lng)
         self.map_widget.set_zoom(18)
 
+        # Update the station data analytics view
+        self.station_data_analytics_view.update_view(station.id, self.model.sprit_type)
+
     def set_sprit_type(self, event=None):
         """
         Update the model and view based on the selected fuel type.

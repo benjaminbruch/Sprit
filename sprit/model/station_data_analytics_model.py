@@ -8,6 +8,8 @@ class StationDataAnalyticsModel:
         self.db_path = db_path
         self.conn = None
 
+        self.connect_to_hist_database()
+
         # Initialize random prices and dates for demonstration purposes
         self.prices = np.random.uniform(1.65, 1.70, 14)
         self.dates = pd.date_range(start="2024-01-01", end="2024-01-14")
@@ -125,3 +127,9 @@ class StationDataAnalyticsModel:
         suggestion = todays_price <= avg_price if todays_price is not None and avg_price is not None else None
 
         return suggestion
+
+    def update_data(self, station_uuid, fuel_type):
+        df = self.retrieve_data(station_uuid)
+        self.dates, self.prices = self.process_data(df, fuel_type)
+        self.average_price = "{:.2f}".format(self.calc_avg_price(self.prices))
+        self.is_recommended = self.suggest_result(self.prices)
