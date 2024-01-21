@@ -96,7 +96,6 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.frame_right.grid_columnconfigure(1, weight=1)
         self.frame_right.grid_columnconfigure(2, weight=1)
 
-
         # Setup search entry and button
         self.entry = customtkinter.CTkEntry(master=self.frame_right,
                                             placeholder_text="Adresse eingeben")
@@ -119,9 +118,6 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.station_data_analytics_view.grid(row=2, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(10, 0), pady=(20, 10))
         self.station_data_analytics_view.grid_rowconfigure(0, weight=1)
         self.station_data_analytics_view.grid_columnconfigure(0, weight=1)
-
-
-
 
     def select_first_station(self):
         """
@@ -157,8 +153,9 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             self.map_widget.set_marker(station.lat, station.lng, text=station.brand + " (" + str(station.price) + " €)",
                                        icon=self.model.get_gas_station_icon(station.brand), text_color="black")
 
-            # Select the first station after loading and displaying the stations
-            self.select_first_station()
+
+        # Select the first station after loading and displaying the stations
+        self.select_first_station()
 
     def on_station_card_click(self, station, card, event=None):
         """
@@ -169,10 +166,9 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
             card: The card widget that was clicked.
             event: The event triggering this method, default is None.
         """
-        # Unhighlight previous selection, if any
+        # Deselect previous selection, if any
         if self.model.selected_card is not None and self.model.selected_card.winfo_exists():
             self.model.selected_card.configure(border_width=0)
-
 
         # Highlight the selected card and update the model
         card.configure(border_width=2, border_color="white")
@@ -219,4 +215,4 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         Args:
             msg: The message string to be displayed.
         """
-        CTkMessagebox(title="Info", message=msg, header=True)
+        CTkMessagebox(master= self.master, title="Info", message=msg, header=True)

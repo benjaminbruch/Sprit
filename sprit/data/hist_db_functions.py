@@ -1,7 +1,7 @@
 import sqlite3
 from sprit.resources.credentials import Credentials
 
-sqlite_db = '/Users/joerg/Programming/AKI/KI Programmierung/Sprit/sprit/data/tk_hist.db'
+sqlite_db = 'tk_hist.db'
 
 
 class HistData:

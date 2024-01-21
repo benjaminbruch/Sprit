@@ -1,4 +1,6 @@
 import customtkinter
+import numpy as np
+import pandas as pd
 from PIL import Image
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -68,6 +70,15 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         self.recommendation_box.grid(row=3, column=0, sticky='nsew', pady=(0, 20))
 
     def create_chart(self, dates, prices, frame):
+
+        dates = dates.to_numpy(dtype='datetime64[D]')
+
+        # Assuming 'dates' is your numpy array of dates
+        formatted_dates = np.datetime_as_string(dates, unit='D')
+
+        # Extract day and month from the formatted dates
+        dates = [date[8:10] + '.' + date[5:7] for date in formatted_dates]
+
         min_price = min(prices) - 0.01
         max_price = max(prices) + 0.01
 
@@ -111,7 +122,12 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         self.model.update_data(station_id, fuel_type)
         self.create_chart(self.model.dates, self.model.prices, self.chart_frame)
 
+        self.average_price_box.configure(text=self.model.average_price + ' €')
+
         self.thumb_icon = Image.open("sprit/resources/recommendation_icons/thumb_up_green.png") if (
             self.model.is_recommended) else Image.open(
             "sprit/resources/recommendation_icons/thumb_down_red.png")
+        self.recommendation_icon = customtkinter.CTkImage(self.thumb_icon, size=(64, 64))
+        self.recommendation_box.configure(image=self.recommendation_icon)
+
 

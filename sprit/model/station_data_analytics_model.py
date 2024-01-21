@@ -11,12 +11,14 @@ class StationDataAnalyticsModel:
         self.connect_to_hist_database()
 
         # Initialize random prices and dates for demonstration purposes
-        self.prices = np.random.uniform(1.65, 1.70, 14)
-        self.dates = pd.date_range(start="2024-01-01", end="2024-01-14")
-        self.dates = self.dates.strftime("%d.%m")
-        self.dates = np.array(self.dates)
-        self.average_price = "{:.2f}".format(np.median(self.prices))
-        self.is_recommended = False
+        self.prices = np.random.uniform(1.00, 1.00, 15)
+        # Define the start and end dates
+        start_date = pd.Timestamp.today() - pd.DateOffset(days=14)
+        end_date = pd.Timestamp.today()
+        # Create the date range
+        self.dates = pd.date_range(start=start_date, end=end_date)
+        self.average_price = "1.00"
+        self.is_recommended = True
 
     def connect_to_hist_database(self):
         """
@@ -90,9 +92,10 @@ class StationDataAnalyticsModel:
         avg_price_list = [float(price) for price in avg_price_list[:-1]] # Convert to float and remove the last item
 
         avg_price = float(np.median(avg_price_list)) if avg_price_list else None
+        avg_price = format(avg_price, '.2f')
 
         return avg_price
-
+    
     def calc_todays_price(self, prices):
         """
         Calculates today's price from a list of prices.
@@ -131,5 +134,5 @@ class StationDataAnalyticsModel:
     def update_data(self, station_uuid, fuel_type):
         df = self.retrieve_data(station_uuid)
         self.dates, self.prices = self.process_data(df, fuel_type)
-        self.average_price = "{:.2f}".format(self.calc_avg_price(self.prices))
+        self.average_price = str(self.calc_avg_price(self.prices))
         self.is_recommended = self.suggest_result(self.prices)
