@@ -10,6 +10,7 @@
 * [Installation](#Installation)
 * [Benutzung](#Benutzung)
 * [Vorgehensweise im Projekt](#Vorgehensweise-im-Projekt)
+* [Datenimport](#Datenimport)
 * [Ausblick](#Ausblick)
 * [Hinweise](#Hinweise)
 * [Anerkennung](#Anerkennung)
@@ -26,6 +27,14 @@
 
 <!-- INSTALLATION -->
 ## Installation
+Es gibt 2 Möglichkeiten die App zu installieren:
+
+a) Die App kann auf Github unter "Release" für die jeweilige Plattform heruntergeladen werden.
+
+b) Die App kann auch über den Quellcode installiert werden. Dazu muss das Repository geklont werden. Danach sollte in einer Virtuellen Umgebung die Datei `requirements.txt` installiert werden. 
+Abschließend kann die Datei `main.py` ausgeführt werden.
+
+Optional: Kann die unter [Datenimport](#Datenimport) beschriebene Datenbank aktualisiert werden.
 
 <!-- USAGE EXAMPLES -->
 ## Benutzung
