@@ -5,8 +5,8 @@ class Credentials:
     # User Agent for Nominatim (geolocation)
     usr_agent = "FH_SWF"
 
-    # Path to historical database
-    db_path = "sprit/data/tk_hist.db"
+
+
 
 
 

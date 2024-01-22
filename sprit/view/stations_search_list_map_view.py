@@ -51,7 +51,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.master = master
         self.model = StationsSearchListMapModel()
         self.search_model = StationsSearchModel()
-        self.station_data_analytics_model = StationDataAnalyticsModel(Credentials.db_path)
+        self.station_data_analytics_model = StationDataAnalyticsModel()
 
         # Configure grid layout for master
         master.grid_columnconfigure(0, weight=1)

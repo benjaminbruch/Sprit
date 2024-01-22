@@ -1,5 +1,6 @@
 import customtkinter
 import numpy as np
+import os
 from PIL import Image
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -11,9 +12,16 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         super().__init__(master, **kwargs)
         self.model = model
 
-        self.thumb_icon = Image.open("sprit/resources/recommendation_icons/thumb_up_green.png") if (
+        # Get the directory of the currently running script
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+
+        # Join the base directory with the relative path to the icons
+        thumb_up_path = os.path.join(base_dir, "../resources/recommendation_icons/thumb_up_green.png")
+        thumb_down_path = os.path.join(base_dir, "../resources/recommendation_icons/thumb_down_red.png")
+
+        self.thumb_icon = Image.open(thumb_up_path) if (
             self.model.is_recommended) else Image.open(
-            "sprit/resources/recommendation_icons/thumb_down_red.png")
+            thumb_down_path)
 
         self.frame_background_color = '#323333'
         self.box_background_color = 'black'

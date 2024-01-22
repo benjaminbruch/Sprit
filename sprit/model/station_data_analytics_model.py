@@ -1,10 +1,18 @@
 import sqlite3
 import pandas as pd
 import numpy as np
+import os
 
 
 class StationDataAnalyticsModel:
-    def __init__(self, db_path):
+    def __init__(self):
+
+        # Get the directory of the currently running script
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+
+        # Join the base directory with the relative path to the database file
+        db_path = os.path.join(base_dir, "../data/tk_hist.db")
+
         self.db_path = db_path
         self.conn = None
 
