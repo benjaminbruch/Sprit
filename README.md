@@ -72,6 +72,10 @@ Aufgrund der Limitierung von Github von Dateigrößen auf 50 MB konnten wir die 
 In zukünftigen Updates planen wir, die aktuelle SQLite-Datenbank durch eine remote gehostete Datenbank zu ersetzen. Dies wird es uns ermöglichen, die Daten zentral zu speichern und von verschiedenen Geräten aus darauf zuzugreifen. Die Kommunikation mit der Datenbank wird über eine REST-Schnittstelle erfolgen, die eine standardisierte und effiziente Interaktion mit den Daten ermöglicht. Dieser Schritt wird die Skalierbarkeit und Flexibilität unserer Anwendung erheblich verbessern.
 
 Desweiteren planen wir, Caching-Techniken einzuführen, um die Leistung und Benutzererfahrung zu verbessern. Caching ermöglicht es uns, häufig abgerufene Daten temporär zu speichern, um zukünftige Anfragen schneller zu bedienen.
+
+Ein weiterer wichtiger Aspekt, den wir in zukünftigen Updates verbessern möchten, ist die Reaktionszeit der Benutzeroberfläche. Aktuell können bei schnellem Klicken oder Wechseln von Elementen Ladezeiten entstehen. Um dies zu optimieren, planen wir, Nebenläufigkeit und asynchrone Programmierung zu implementieren. 
+
+Mit der asynchronen Programmierung können wir mehrere Aufgaben gleichzeitig ausführen, ohne dass die Benutzeroberfläche blockiert wird. Dies ermöglicht es der Anwendung, auf Benutzereingaben zu reagieren, während sie gleichzeitig andere Aufgaben im Hintergrund ausführt. Dies wird die Benutzererfahrung erheblich verbessern, indem es die wahrgenommenen Ladezeiten reduziert und die allgemeine Reaktionsfähigkeit der Anwendung erhöht.
 <!-- Hinweise -->
 ## Hinweise 
 Für die Erstellung dieser Readme und der Dokumentation inklusive der Inline-Kommentare sowie der Unit-Tests wurde die Hilfe von Github Copilot & OpenAI ChatGPT in Anspruch genommen. Desweiteren wurden diese Tools auch zum Auflösen und Beheben von Fehlermeldungen verwendet.
