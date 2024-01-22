@@ -1,5 +1,7 @@
 import pytankerkoenig as pytking
 from geopy.geocoders import Nominatim
+import os
+import certifi
 from sprit.resources.credentials import Credentials
 from sprit.model.station_model import Station, SortBy
 
@@ -24,6 +26,10 @@ class StationsSearchModel:
         Initializes the StationsSearchModel with an empty list of stations.
         """
         self.stations = []
+
+        # Set the SSL_CERT_FILE environment variable to the location of the CA bundle file provided by certifi.
+        # This is done to ensure that SSL certificate verification can be done successfully when making HTTPS requests.
+        os.environ['SSL_CERT_FILE'] = certifi.where()
 
     def get_nearby_stations(self, address: str, dist: int,
                             sort_by: SortBy = SortBy.distance, sprit_type = "e10") -> [Station]:
