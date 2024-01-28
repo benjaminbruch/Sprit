@@ -4,7 +4,7 @@ from cx_Freeze import setup, Executable
 base = None
 
 # Define the executables
-executables = [Executable("main.py", base=base, icon="files/app_icon.png")]
+executables = [Executable("main.py", base=base, icon="files/app_icon.icns")]
 
 # Define the options for the build. Here we specify the packages to include, the path to the include files (like icons, database, etc.)
 options = {
