@@ -6,11 +6,10 @@ import os
 
 class StationDataAnalyticsModel:
     def __init__(self):
-
-        # Get the directory of the currently running script
+        # Determine the directory of the currently running script
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
-        # Join the base directory with the relative path to the database file
+        # Combine the base directory with the relative path to the database file
         db_path = os.path.join(base_dir, "../data/tk_hist.db")
 
         self.db_path = db_path
@@ -18,12 +17,12 @@ class StationDataAnalyticsModel:
 
         self.connect_to_hist_database()
 
-        # Initialize random prices and dates for demonstration purposes
+        # Set initial prices and dates for demonstration purposes
         self.prices = np.random.uniform(1.00, 1.00, 15)
-        # Define the start and end dates
+        # Set the start and end dates
         start_date = pd.Timestamp.today() - pd.DateOffset(days=14)
         end_date = pd.Timestamp.today()
-        # Create the date range
+        # Generate the date range
         self.dates = pd.date_range(start=start_date, end=end_date)
         self.average_price = "1.00"
         self.is_recommended = True
@@ -47,7 +46,7 @@ class StationDataAnalyticsModel:
         if self.conn:
             self.conn.close()
 
-    def retrieve_data(self, station_uuid):
+    def retrieve_data(self, station_uuid, fuel_type):
         """
         Retrieves data for the specified fuel station.
         The data is read using the Pandas function "read_sql_query()" and stored in a Pandas DataFrame.
@@ -62,8 +61,9 @@ class StationDataAnalyticsModel:
             print("Database connection is missing.")
             return None
 
-        query = f"SELECT * FROM prices WHERE station_uuid = '{station_uuid}'" # SQL query for the selected station.
-        df = pd.read_sql_query(query, self.conn) # Creating the DataFrame
+        # SQL query to get date & price for the selected station.
+        query = f"SELECT date, {fuel_type} FROM prices INNER JOIN stations ON prices.station_id = stations.id WHERE stations.station_uuid = '{station_uuid}'"
+        df = pd.read_sql_query(query, self.conn)  # Create the DataFrame
 
         return df
 
@@ -79,8 +79,8 @@ class StationDataAnalyticsModel:
         Returns:
             - (dates, prices): Tuple containing dates and prices for data visualization
         """
-        df['date'] = pd.to_datetime(df['date']) # Convert "date" field to simple date format
-        dates = df.groupby(df['date'].dt.date)[fuel_type].mean().index # Unique dates
+        df['date'] = pd.to_datetime(df['date'])  # Convert "date" field to simple date format
+        dates = df.groupby(df['date'].dt.date)[fuel_type].mean().index  # Get unique dates
         prices = df.groupby(df['date'].dt.date)[fuel_type].mean()
 
         return dates, prices
@@ -140,7 +140,7 @@ class StationDataAnalyticsModel:
         return suggestion
 
     def update_data(self, station_uuid, fuel_type):
-        df = self.retrieve_data(station_uuid)
+        df = self.retrieve_data(station_uuid, fuel_type)
         self.dates, self.prices = self.process_data(df, fuel_type)
         self.average_price = str(self.calc_avg_price(self.prices))
         self.is_recommended = self.suggest_result(self.prices)

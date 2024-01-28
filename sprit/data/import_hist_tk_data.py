@@ -2,73 +2,97 @@ import csv
 import os
 import sqlite3
 
-# Path to the CSV file and SQLite database
+# Define the path to the CSV file and the SQLite database
 prices_path = "csv/"
 sqlite_db = "tk_hist.db"
 
 
-# Function to create an SQLite database and table
+# Function to create an SQLite database and its tables
 def create_tables():
+    # Establish a connection to the SQLite database
     conn = sqlite3.connect(sqlite_db)
     cursor = conn.cursor()
 
-    # Drop the table if it exists
+    # If the tables already exist, drop them
+    cursor.execute('DROP TABLE IF EXISTS stations')
     cursor.execute('DROP TABLE IF EXISTS prices')
 
-    cursor.execute('''CREATE TABLE prices (
+    # Create the 'stations' table
+    cursor.execute('''CREATE TABLE stations (
+                        id INTEGER PRIMARY KEY,
+                        station_uuid TEXT NOT NULL UNIQUE
+                   )''')
+
+    # Create the 'prices' table
+    cursor.execute('''
+                      CREATE TABLE prices (
+                        id INTEGER PRIMARY KEY,
                         date TEXT NOT NULL,
-                        time TEXT NOT NULL,
-                        station_uuid TEXT NOT NULL,
                         diesel REAL,
                         e5 REAL,
                         e10 REAL,
-                        dieselchange INTEGER,
-                        e5change INTEGER,
-                        e10change INTEGER
-                    )''')
+                        station_id INTEGER,
+                        FOREIGN KEY(station_id) REFERENCES stations(id)
+                   )''')
 
+    # Commit the changes and close the connection
     conn.commit()
     conn.close()
 
 
 # Function to insert data from the CSV file into the SQLite database
 def insert_data_from_csv():
+    # Establish a connection to the SQLite database
     conn = sqlite3.connect(sqlite_db)
     cursor = conn.cursor()
 
+    # Iterate over each file in the specified directory
     for prices_file in os.listdir(prices_path):
-        # Check if the file is a CSV file
+        # If the file is a CSV file
         _, file_extension = os.path.splitext(prices_file)
         if file_extension == '.csv':
-            # Join the directory path with the file name
+            # Construct the full path to the file
             full_file_path = os.path.join(prices_path, prices_file)
+            # Open the file
             with open(full_file_path, 'r', newline='', encoding='utf-8') as file:
                 csv_reader = csv.reader(file)
-                next(csv_reader)  # Skip the header
+                next(csv_reader)  # Skip the header row
+                # Iterate over each row in the CSV file
                 for row in csv_reader:
-                    inp = row
-                    # Separate date and time from csv input
-                    dat = row[0][:10]
-                    tim = row[0][11:19]
-                    # Write date and time into separate fields in the database
-                    del row[0]
-                    row.insert(0, tim)
-                    row.insert(0, dat)
+                    # Extract the necessary data from the row
+                    date, station_uuid, diesel, e5, e10, *_ = row
 
-                    cursor.execute(
-                        'INSERT INTO prices (date, time, station_uuid, diesel, e5, e10, dieselchange, e5change, e10change) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        row)
+                    # Check if the station_uuid already exists in the 'stations' table
+                    cursor.execute("SELECT id FROM stations WHERE station_uuid = ?", (station_uuid,))
+                    result = cursor.fetchone()
 
+                    if result is None:
+                        # If the station_uuid does not exist, insert a new row into the 'stations' table
+                        cursor.execute("INSERT INTO stations (station_uuid) VALUES (?)", (station_uuid,))
+                        station_id = cursor.lastrowid
+                    else:
+                        # If the station_uuid does exist, get the corresponding station_id
+                        station_id = result[0]
+
+                    # Insert a new row into the 'prices' table
+                    cursor.execute("INSERT INTO prices (date, diesel, e5, e10, station_id) VALUES (?, ?, ?, ?, ?)",
+                                   (date, diesel, e5, e10, station_id))
+
+    # Commit the changes and close the connection
     conn.commit()
     conn.close()
 
 
-# Main function to run the program
+# Main function to execute the program
 def main():
+    # Create the database tables
     create_tables()
+    # Insert data from the CSV files into the database
     insert_data_from_csv()
+    # Print a success message
     print("Data from CSV files successfully inserted into the SQLite3 database!")
 
 
+# If this script is being run directly, execute the main function
 if __name__ == "__main__":
     main()
