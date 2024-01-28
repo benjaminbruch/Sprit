@@ -1,6 +1,7 @@
 from sprit.model.station_model import Station
 from PIL import Image, ImageTk
 import os
+from sprit.resources import helper
 
 
 class StationsSearchListMapModel:
@@ -77,9 +78,11 @@ class StationsSearchListMapModel:
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
         try:
-            img = Image.open(os.path.join(base_dir, f"../resources/stations_icons/{station_name}.png"))
+
+            img = Image.open( helper.find_data_file(f"{station_name}.png", os.path.join(base_dir, "../resources/stations_icons/")))
         except FileNotFoundError as e:
             # If specific station icon is not found, use a default icon
-            img = Image.open(os.path.join(base_dir, f"../resources/stations_icons/gas_station_icon.png"))
+            helper.find_data_file(f"gas_station_icon.png", os.path.join(base_dir, "../resources/stations_icons/"))
+            img = Image.open(helper.find_data_file(f"gas_station_icon.png", os.path.join(base_dir, "../resources/stations_icons/")))
         photo = ImageTk.PhotoImage(img)
         return photo

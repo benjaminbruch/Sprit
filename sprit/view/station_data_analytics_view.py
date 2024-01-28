@@ -5,6 +5,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from sprit.model.station_data_analytics_model import StationDataAnalyticsModel
+from sprit.resources import helper
 
 
 class StationDataAnalyticsView(customtkinter.CTkFrame):
@@ -16,8 +17,9 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
         # Join the base directory with the relative path to the icons
-        thumb_up_path = os.path.join(base_dir, "../resources/recommendation_icons/thumb_up_green.png")
-        thumb_down_path = os.path.join(base_dir, "../resources/recommendation_icons/thumb_down_red.png")
+        thumb_up_path = helper.find_data_file("thumb_up_green.png", os.path.join(base_dir, "../resources/recommendation_icons/"))
+        thumb_down_path = helper.find_data_file("thumb_down_red.png", os.path.join(base_dir, "../resources/recommendation_icons/"))
+
 
         self.thumb_icon = Image.open(thumb_up_path) if (
             self.model.is_recommended) else Image.open(

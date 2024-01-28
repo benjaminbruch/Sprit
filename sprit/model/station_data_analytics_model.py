@@ -2,6 +2,7 @@ import sqlite3
 import pandas as pd
 import numpy as np
 import os
+from sprit.resources import helper
 
 
 class StationDataAnalyticsModel:
@@ -10,7 +11,7 @@ class StationDataAnalyticsModel:
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
         # Combine the base directory with the relative path to the database file
-        db_path = os.path.join(base_dir, "../data/tk_hist.db")
+        db_path = helper.find_data_file("tk_hist.db", os.path.join(base_dir, "../data/"))
 
         self.db_path = db_path
         self.conn = None
