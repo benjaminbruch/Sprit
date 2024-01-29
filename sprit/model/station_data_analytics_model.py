@@ -19,9 +19,9 @@ class StationDataAnalyticsModel:
         self.connect_to_hist_database()
 
         # Set initial prices and dates for demonstration purposes
-        self.prices = np.random.uniform(1.00, 1.00, 15)
+        self.prices = np.random.uniform(1.00, 1.00, 8)
         # Set the start and end dates
-        start_date = pd.Timestamp.today() - pd.DateOffset(days=14)
+        start_date = pd.Timestamp.today() - pd.DateOffset(days=7)
         end_date = pd.Timestamp.today()
         # Generate the date range
         self.dates = pd.date_range(start=start_date, end=end_date)
@@ -63,7 +63,7 @@ class StationDataAnalyticsModel:
             return None
 
         # SQL query to get date & price for the selected station.
-        query = f"SELECT date, {fuel_type} FROM prices INNER JOIN stations ON prices.station_id = stations.id WHERE stations.station_uuid = '{station_uuid}'"
+        query = f"SELECT DISTINCT date, {fuel_type} FROM prices INNER JOIN stations ON prices.station_id = stations.id WHERE stations.station_uuid = '{station_uuid}'"
         df = pd.read_sql_query(query, self.conn)  # Create the DataFrame
 
         return df

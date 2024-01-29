@@ -106,7 +106,7 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
 
         # Display the price on top of each bar
         for i, price in zip(dates, prices):
-            ax.text(i, price + 0.00, f'{price:.2f}', ha='center', va='bottom', color='white')
+            ax.text(i, price + 0.00, f'{price:.3f}', ha='center', va='bottom', color='white')
 
         for index, (price, date) in enumerate(zip(prices, dates)):
             ax.text(index, min_price + 0.001, date, ha='center', va='bottom', color='white', fontsize=8)

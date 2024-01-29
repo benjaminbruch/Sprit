@@ -54,7 +54,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.station_data_analytics_model = StationDataAnalyticsModel()
 
         # Configure grid layout for master
-        master.grid_columnconfigure(0, weight=1)
+        master.grid_columnconfigure(0, weight=2, minsize=400)
         master.grid_columnconfigure(1, weight=1)
         master.grid_rowconfigure(0, weight=1)
 
@@ -191,6 +191,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         self.model.set_sprit_type(self.sprit_type_button.get())
         self.model.update_price_by_sprit_type()
         self.stations_list.update_view(self.model.stations)
+        self.select_first_station()
 
     def sorty_by(self, event=None):
         """
@@ -201,6 +202,7 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         """
         self.model.sort_stations_by(self.price_distance_button.get())
         self.stations_list.update_view(self.model.stations)
+        self.select_first_station()
 
     def start(self):
         """
