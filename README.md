@@ -21,20 +21,20 @@
 * Tankstellen in der Umgebung suchen inkl. Echtzeitpreise
 * Sortierung nach Preis und Entfernung
 * Filtern nach Kraftstoffart
-* Darstellung der Tankstellen auf einer Karte
+* Darstellung der Tankstellen mit Logo auf einer Karte
 * Anzeige von historischen Preisen
-* Empfehlung der günstigsten Tankstelle und der günstigsten Tankzeit
+* Empfehlung ob aktuell ein guter Zeitpunkt zum Tanken ist
 
 <!-- INSTALLATION -->
 ## Installation
 Es gibt 2 Möglichkeiten die App zu installieren:
 
-a) Die App kann auf Github unter "Releases" für die jeweilige Plattform heruntergeladen werden.
+a) Die App kann als Zip-Datei auf Github unter "Releases" für die jeweilige Plattform heruntergeladen werden. Das heruntergeladene Archiv muss entpackt werden. Anschließend kann die Datei `main` mit Doppelklick ausgeführt werden.
 
 b) Die App kann auch über den Quellcode installiert werden. Dazu muss das Repository geklont werden. Danach sollte in einer Virtuellen Umgebung die Datei `requirements.txt` installiert werden. 
 Abschließend kann die Datei `main.py` ausgeführt werden.
 
-Optional: Kann die unter [Datenimport](#Datenimport) beschriebene Datenbank aktualisiert werden.
+**Wichtig**: Bei Variante b) muss die unter [Datenimport](#Datenimport) beschriebene Datenbank noch aktualisiert werden.
 
 <!-- USAGE EXAMPLES -->
 ## Benutzung
@@ -45,7 +45,8 @@ Optional: Kann die unter [Datenimport](#Datenimport) beschriebene Datenbank aktu
 3. Auswahl der gewünschten Sortierung
 4. Tankstellen werden auf der Karte angezeigt
 5. Bei Auswahl einer Tankstelle in der Liste zoomt die Karte auf die entsprechende Tankstelle
- 
+6. Es werde die Preise der letzten 7 Tage, der Durchnittspreis in diesem Zeitraum und eine Empfehlung zum Tanken angezeigt
+
 <!-- PLANNING -->
 ## Vorgehensweise im Projekt
 ![trello_screenshot.png](files%2Ftrello_screenshot.png)
@@ -63,7 +64,7 @@ Insgesamt bildeten diese Entscheidungen und Tools die Grundlage für eine strukt
 
 <!-- Datenimport -->
 ## Datenimport
-Aktuell wird für den Abruf der historischen Spritpreise und der Berechnung von Durchschnittspreis und Preisempfehlung eine lokale SQLite-Datenbank verwendet. Die Datenbank wird in der Datei `tk_hist.db` im Ordner `data` gespeichert. 
+Aktuell wird für den Abruf der historischen Spritpreise und der Berechnung von Durchschnittspreis und Preisempfehlung eine lokale SQLite-Datenbank verwendet. Die Datenbank wird in der Datei `tk_hist.db` im Ordner `resources` gespeichert. 
 Um die Daten zu aktualisieren, müssen die aktuellen CSV-Dateien von der Tankerkönig-Seite: https://dev.azure.com/tankerkoenig/_git/tankerkoenig-data?path=/prices geladen werden und in den Ordner `data/csv` kopiert werden. Anschließend kann das Skript `import_hist_tk_data.py` ausgeführt werden. Die Datenbank wird dann aktualisiert.
 
 Aufgrund der Limitierung von Github von Dateigrößen auf 50 MB konnten wir die Datenbank nicht in das Repository hochladen. Deswegen muss die Datenbank lokal erstellt werden.
