@@ -10,7 +10,7 @@ executables = [Executable("main.py", base=base, icon="files/app_icon.icns")]
 options = {
     "build_exe": {
         "packages": ["customtkinter", "sprit.view.stations_search_list_map_view"],
-        "include_files": ["sprit/data/tk_hist.db", "sprit/resources/stations_icons", "sprit/resources/recommendation_icons"],
+        "include_files": ["sprit/resources"],
     }
 }
 

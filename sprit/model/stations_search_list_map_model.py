@@ -20,6 +20,7 @@ class StationsSearchListMapModel:
         self.sprit_type = "e10"        # Default fuel type
         self.sort_by = "Preis"         # Default sorting preference
         self.selected_card = None      # Reference to the currently selected station card
+        self.photo = None              # Reference to the currently selected station icon
 
     def sort_stations_by(self, sort_by: str):
         """
@@ -79,10 +80,10 @@ class StationsSearchListMapModel:
 
         try:
 
-            img = Image.open( helper.find_data_file(f"{station_name}.png", os.path.join(base_dir, "../resources/stations_icons/")))
+            img = Image.open( helper.find_data_file(f"{station_name}.png"))
         except FileNotFoundError as e:
             # If specific station icon is not found, use a default icon
-            helper.find_data_file(f"gas_station_icon.png", os.path.join(base_dir, "../resources/stations_icons/"))
-            img = Image.open(helper.find_data_file(f"gas_station_icon.png", os.path.join(base_dir, "../resources/stations_icons/")))
-        photo = ImageTk.PhotoImage(img)
-        return photo
+            helper.find_data_file(f"gas_station_icon.png")
+            img = Image.open(helper.find_data_file(f"gas_station_icon.png"))
+        self.photo = ImageTk.PhotoImage(img)
+        return self.photo

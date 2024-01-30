@@ -1,29 +1,14 @@
 import customtkinter
 import numpy as np
-import os
-from PIL import Image
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from sprit.model.station_data_analytics_model import StationDataAnalyticsModel
-from sprit.resources import helper
 
 
 class StationDataAnalyticsView(customtkinter.CTkFrame):
     def __init__(self, master, model: StationDataAnalyticsModel, **kwargs):
         super().__init__(master, **kwargs)
         self.model = model
-
-        # Get the directory of the currently running script
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-
-        # Join the base directory with the relative path to the icons
-        thumb_up_path = helper.find_data_file("thumb_up_green.png", os.path.join(base_dir, "../resources/recommendation_icons/"))
-        thumb_down_path = helper.find_data_file("thumb_down_red.png", os.path.join(base_dir, "../resources/recommendation_icons/"))
-
-
-        self.thumb_icon = Image.open(thumb_up_path) if (
-            self.model.is_recommended) else Image.open(
-            thumb_down_path)
 
         self.frame_background_color = '#323333'
         self.box_background_color = 'black'
@@ -70,7 +55,7 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
                                                            font=("Arial", 20, "bold"), pady=10)
         self.recommendation_label.grid(row=2, column=0, sticky='nsew', pady=(0, 20))
 
-        self.recommendation_icon = customtkinter.CTkImage(self.thumb_icon, size=(64, 64))
+        self.recommendation_icon = customtkinter.CTkImage(self.model.recommendation_icon, size=(64, 64))
         self.recommendation_box = customtkinter.CTkLabel(self.average_recommendation_frame,
                                                          image=self.recommendation_icon,
                                                          text="",
@@ -133,10 +118,7 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
 
         self.average_price_box.configure(text=self.model.average_price + ' €')
 
-        self.thumb_icon = Image.open("sprit/resources/recommendation_icons/thumb_up_green.png") if (
-            self.model.is_recommended) else Image.open(
-            "sprit/resources/recommendation_icons/thumb_down_red.png")
-        self.recommendation_icon = customtkinter.CTkImage(self.thumb_icon, size=(64, 64))
+        self.recommendation_icon = customtkinter.CTkImage(self.model.get_recommendation_icon(), size=(64, 64))
         self.recommendation_box.configure(image=self.recommendation_icon)
 
 

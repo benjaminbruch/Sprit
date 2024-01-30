@@ -1,7 +1,12 @@
 import sqlite3
+import sys
+
 import pandas as pd
 import numpy as np
 import os
+
+from PIL import Image
+
 from sprit.resources import helper
 
 
@@ -11,7 +16,7 @@ class StationDataAnalyticsModel:
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
         # Combine the base directory with the relative path to the database file
-        db_path = helper.find_data_file("tk_hist.db", os.path.join(base_dir, "../data/"))
+        db_path = helper.find_data_file("tk_hist.db")
 
         self.db_path = db_path
         self.conn = None
@@ -27,6 +32,19 @@ class StationDataAnalyticsModel:
         self.dates = pd.date_range(start=start_date, end=end_date)
         self.average_price = "1.00"
         self.is_recommended = True
+
+        # Get the directory of the currently running script
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+
+        # Join the base directory with the relative path to the icons
+        self.thumb_up_path = helper.find_data_file("thumb_up_green.png")
+        self.thumb_down_path = helper.find_data_file("thumb_down_red.png")
+        #self.thumb_up_path = os.path.dirname(sys.executable)+"/thumb_up_green.png"
+        #self.thumb_down_path = os.path.dirname(sys.executable)+"/thumb_down_red.png"
+        print(self.thumb_up_path)
+        print(self.thumb_down_path)
+
+        self.recommendation_icon = Image.open(self.thumb_up_path)
 
     def connect_to_hist_database(self):
         """
@@ -140,7 +158,20 @@ class StationDataAnalyticsModel:
 
         return suggestion
 
+    def get_recommendation_icon(self):
+        """
+        Returns the recommendation icon.
+        """
+        if self.is_recommended:
+            self.recommendation_icon = Image.open(self.thumb_up_path)
+        else:
+            self.recommendation_icon = Image.open(self.thumb_down_path)
+        return self.recommendation_icon
+
     def update_data(self, station_uuid, fuel_type):
+        """
+        Updates the data for the selected fuel station.
+        """
         df = self.retrieve_data(station_uuid, fuel_type)
         self.dates, self.prices = self.process_data(df, fuel_type)
         self.average_price = str(self.calc_avg_price(self.prices))

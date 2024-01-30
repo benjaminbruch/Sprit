@@ -1,10 +1,16 @@
 import csv
 import os
 import sqlite3
+import sys
+
+from sprit.resources import helper
 
 # Define the path to the CSV file and the SQLite database
 prices_path = "csv/"
-sqlite_db = "tk_hist.db"
+sqlite_db = helper.find_data_file("tk_hist.db")
+
+#sqlite_db = os.path.dirname(sys.executable)+"/tk_hist.db"
+print(sqlite_db)
 
 
 # Function to create an SQLite database and its tables
