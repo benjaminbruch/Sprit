@@ -7,7 +7,7 @@ from sprit.model.stations_search_model import StationsSearchModel, GeocodingErro
 from sprit.model.station_model import Station, SortBy
 from sprit.model.stations_search_list_map_model import StationsSearchListMapModel
 from sprit.model.station_data_analytics_model import StationDataAnalyticsModel
-from sprit.resources.credentials import Credentials
+
 
 class StationsSearchListMapView(customtkinter.CTkFrame):
     """
@@ -217,4 +217,4 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         Args:
             msg: The message string to be displayed.
         """
-        CTkMessagebox(master= self.master, title="Info", message=msg, header=True)
+        CTkMessagebox(master=self.master, title="Info", message=msg, header=True)

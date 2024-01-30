@@ -2,6 +2,7 @@ import unittest
 from sprit.model.stations_search_model import StationsSearchModel, SortBy, GeocodingError
 from sprit.model.station_model import Station
 
+
 class TestStationsSearchModel(unittest.TestCase):
     def setUp(self):
         self.search_model = StationsSearchModel()
@@ -22,6 +23,7 @@ class TestStationsSearchModel(unittest.TestCase):
             self.assertIsInstance(long, float)
         except GeocodingError as e:
             self.fail(f"GeocodingError was raised: {e}")
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -5,6 +5,7 @@ import certifi
 from sprit.resources.credentials import Credentials
 from sprit.model.station_model import Station, SortBy
 
+
 class GeocodingError(Exception):
     """
     Custom exception class for handling geocoding errors.
@@ -32,7 +33,7 @@ class StationsSearchModel:
         os.environ['SSL_CERT_FILE'] = certifi.where()
 
     def get_nearby_stations(self, address: str, dist: int,
-                            sort_by: SortBy = SortBy.distance, sprit_type = "e10") -> [Station]:
+                            sort_by: SortBy = SortBy.distance, sprit_type="e10") -> [Station]:
         """
         Fetches nearby gas stations based on a given address.
 

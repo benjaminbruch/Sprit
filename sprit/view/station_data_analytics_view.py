@@ -31,7 +31,6 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         self.chart_frame.grid(row=1, column=0, sticky='nsew', pady=(0, 10))
         self.chart_frame.grid_rowconfigure(0, weight=1)
         self.chart_frame.grid_columnconfigure(0, weight=1)
-        self.create_chart(self.model.dates, self.model.prices, self.chart_frame)
 
         self.average_recommendation_frame = customtkinter.CTkFrame(self, fg_color=self.frame_background_color)
         self.average_recommendation_frame.grid(row=0, column=1, sticky='nsew', padx=(0, 10))
@@ -120,5 +119,3 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
 
         self.recommendation_icon = customtkinter.CTkImage(self.model.get_recommendation_icon(), size=(64, 64))
         self.recommendation_box.configure(image=self.recommendation_icon)
-
-

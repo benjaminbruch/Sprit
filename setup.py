@@ -9,7 +9,7 @@ executables = [Executable("main.py", base=base, icon="files/app_icon.icns")]
 # Define the options for the build. Here we specify the packages to include, the path to the include files (like icons, database, etc.)
 options = {
     "build_exe": {
-        "packages": ["customtkinter", "sprit.view.stations_search_list_map_view"],
+        "packages": ["customtkinter"],
         "include_files": ["sprit/resources"],
     }
 }

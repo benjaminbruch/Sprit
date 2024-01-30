@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class SortBy(Enum):
     """
     An enumeration to define sorting criteria for gas stations.
