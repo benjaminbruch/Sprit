@@ -79,7 +79,10 @@ Ein weiterer wichtiger Aspekt, den wir in zukünftigen Updates verbessern möcht
 Mit der asynchronen Programmierung können wir mehrere Aufgaben gleichzeitig ausführen, ohne dass die Benutzeroberfläche blockiert wird. Dies ermöglicht es der Anwendung, auf Benutzereingaben zu reagieren, während sie gleichzeitig andere Aufgaben im Hintergrund ausführt. Dies wird die Benutzererfahrung erheblich verbessern, indem es die wahrgenommenen Ladezeiten reduziert und die allgemeine Reaktionsfähigkeit der Anwendung erhöht.
 <!-- Hinweise -->
 ## Hinweise 
-Für die Erstellung dieser Readme und der Dokumentation inklusive der Inline-Kommentare sowie der Unit-Tests wurde die Hilfe von Github Copilot & OpenAI ChatGPT in Anspruch genommen. Desweiteren wurden diese Tools auch zum Auflösen und Beheben von Fehlermeldungen verwendet.
+1. Im Repository wurden Dateien mit dem Zusatz _"\_old"_ im Dateinamen gekennzeichnet. Diese Dateien sind nicht mehr aktuell und wurden durch neuere Versionen ersetzt. Sie wurden jedoch nicht gelöscht, um den Entwicklungs-Prozess nachvollziehbarer zu machen.
+
+
+2. Für die Erstellung dieser Readme und der Dokumentation inklusive der Inline-Kommentare sowie der Unit-Tests wurde die Hilfe von Github Copilot & OpenAI ChatGPT in Anspruch genommen. Desweiteren wurden diese Tools auch zum Auflösen und Beheben von Fehlermeldungen verwendet.
 <!-- ACKNOWLEDGEMENTS -->
 ## Anerkennung 
 * [Tankerkönig](https://tankerkoenig.de)
