@@ -64,7 +64,7 @@ Insgesamt bildeten diese Entscheidungen und Tools die Grundlage für eine strukt
 
 <!-- Datenimport -->
 ## Datenimport
-Aktuell wird für den Abruf der historischen Spritpreise und der Berechnung von Durchschnittspreis und Preisempfehlung eine lokale SQLite-Datenbank verwendet. Die Datenbank wird in der Datei `tk_hist.db` im Ordner `resources` gespeichert. 
+Aktuell wird für den Abruf der historischen Spritpreise und der Berechnung von Durchschnittspreis und Preisempfehlung eine lokale SQLite-Datenbank verwendet. Die Datenbank wird in der Datei `tk_hist.db` im Ordner `resources` gespeichert. Es sind zum Abgabezeitpunkt die Daten vom 23.01.2024 bis zum 30.01.2024 enthalten.
 Um die Daten zu aktualisieren, müssen die aktuellen CSV-Dateien von der Tankerkönig-Seite: https://dev.azure.com/tankerkoenig/_git/tankerkoenig-data?path=/prices geladen werden und in den Ordner `data/csv` kopiert werden. Anschließend kann das Skript `import_hist_tk_data.py` ausgeführt werden. Die Datenbank wird dann aktualisiert.
 
 Aufgrund der Limitierung von Github von Dateigrößen auf 50 MB konnten wir die Datenbank nicht in das Repository hochladen. Deswegen muss die Datenbank lokal erstellt werden.

@@ -173,13 +173,14 @@ class StationsSearchListMapView(customtkinter.CTkFrame):
         # Highlight the selected card and update the model
         card.configure(border_width=2, border_color="white")
         self.model.selected_card = card
+        self.model.selected_station = station
 
         # Update map position and zoom to the selected station
         self.map_widget.set_position(station.lat, station.lng)
         self.map_widget.set_zoom(18)
 
         # Update the station data analytics view
-        self.station_data_analytics_view.update_view(station.id, self.model.sprit_type)
+        self.station_data_analytics_view.update_view(station.id, self.model.sprit_type, self.model.selected_station.price)
 
     def set_sprit_type(self, event=None):
         """

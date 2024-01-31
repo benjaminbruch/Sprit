@@ -23,7 +23,7 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
         self.chart_label_frame.grid_rowconfigure(1, weight=1)
         self.chart_label_frame.grid_columnconfigure(0, weight=1)
 
-        self.chart_label = customtkinter.CTkLabel(self.chart_label_frame, text=f"Preisentwicklung in €",
+        self.chart_label = customtkinter.CTkLabel(self.chart_label_frame, text=f"Preisentwicklung letzte 7 Tage in €",
                                                   font=("Arial", 24, "bold"), pady=10, fg_color="transparent")
         self.chart_label.grid(row=0, column=0, sticky='nsew', pady=(0, 10))
 
@@ -111,8 +111,8 @@ class StationDataAnalyticsView(customtkinter.CTkFrame):
 
         plt.close(fig)
 
-    def update_view(self, station_id, fuel_type):
-        self.model.update_data(station_id, fuel_type)
+    def update_view(self, station_id, fuel_type, current_price):
+        self.model.update_data(station_id, fuel_type, current_price)
         self.create_chart(self.model.dates, self.model.prices, self.chart_frame)
 
         self.average_price_box.configure(text=self.model.average_price + ' €')

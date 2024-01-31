@@ -19,6 +19,7 @@ class StationsSearchListMapModel:
         self.sprit_type = "e10"        # Default fuel type
         self.sort_by = "Preis"         # Default sorting preference
         self.selected_card = None      # Reference to the currently selected station card
+        self.selected_station = None   # Reference to the currently selected station
         self.photo = None              # Reference to the currently selected station icon
 
     def sort_stations_by(self, sort_by: str):
