@@ -31,6 +31,8 @@ Es gibt 2 Möglichkeiten die App zu installieren:
 
 a) Die App kann als Zip-Datei auf Github unter "Releases" für die jeweilige Plattform heruntergeladen werden. Das heruntergeladene Archiv muss entpackt werden. Anschließend kann die Datei `main` mit Doppelklick ausgeführt werden.
 
+Hinweis für *MacOS*-Nutzer: Sollte es beim Öffnen der ausführbaren Datei Probleme bzgl. eines nicht verifizierten Entwicklers geben, bitte einmal hier schauen: https://support.apple.com/de-de/guide/mac-help/mh40616/mac
+
 b) Die App kann auch über den Quellcode installiert werden. Dazu muss das Repository geklont werden. Danach sollte in einer Virtuellen Umgebung die Datei `requirements.txt` installiert werden. 
 Abschließend kann die Datei `main.py` ausgeführt werden.
 
