@@ -1,20 +1,12 @@
 import sqlite3
-import sys
-
 import pandas as pd
 import numpy as np
-import os
-
 from PIL import Image
-
 from sprit.resources import helper
 
 
 class StationDataAnalyticsModel:
     def __init__(self):
-        # Determine the directory of the currently running script
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-
         # Combine the base directory with the relative path to the database file
         db_path = helper.find_data_file("tk_hist.db")
 
@@ -33,17 +25,9 @@ class StationDataAnalyticsModel:
         self.average_price = "1.00"
         self.is_recommended = True
 
-        # Get the directory of the currently running script
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-
         # Join the base directory with the relative path to the icons
         self.thumb_up_path = helper.find_data_file("thumb_up_green.png")
         self.thumb_down_path = helper.find_data_file("thumb_down_red.png")
-        #self.thumb_up_path = os.path.dirname(sys.executable)+"/thumb_up_green.png"
-        #self.thumb_down_path = os.path.dirname(sys.executable)+"/thumb_down_red.png"
-        print(self.thumb_up_path)
-        print(self.thumb_down_path)
-
         self.recommendation_icon = Image.open(self.thumb_up_path)
 
     def connect_to_hist_database(self):
@@ -98,9 +82,14 @@ class StationDataAnalyticsModel:
         Returns:
             - (dates, prices): Tuple containing dates and prices for data visualization
         """
-        df['date'] = pd.to_datetime(df['date'])  # Convert "date" field to simple date format
-        dates = df.groupby(df['date'].dt.date)[fuel_type].mean().index  # Get unique dates
-        prices = df.groupby(df['date'].dt.date)[fuel_type].mean()
+        # Convert "date" field to datetime format and sort by date in descending order
+        df['date'] = pd.to_datetime(df['date'])
+        df = df.sort_values('date', ascending=False)
+
+        # Group by date and get the mean fuel price, then get the last 7 records
+        grouped = df.groupby(df['date'].dt.date)[fuel_type].mean()
+        dates = grouped.index[-7:]
+        prices = grouped.values[-7:]
 
         return dates, prices
 
@@ -123,22 +112,7 @@ class StationDataAnalyticsModel:
 
         return avg_price
 
-    def calc_todays_price(self, prices):
-        """
-        Calculates today's price from a list of prices.
-
-        Parameters:
-            - prices (list): List of prices
-
-        Returns:
-            - todays_price (float): Today's price
-        """
-        price_list = [format(price, '.2f') for price in prices]
-        todays_price = float(price_list[-1]) if price_list else None
-
-        return todays_price
-
-    def suggest_result(self, prices):
+    def suggest_result(self, prices, current_price):
         """
         Suggests whether to recommend based on the comparison of today's price with the average price.
 
@@ -153,8 +127,8 @@ class StationDataAnalyticsModel:
         avg_price_list = [float(price) for price in avg_price_list[:-1]]
         avg_price = float(np.median(avg_price_list)) if avg_price_list else None
 
-        todays_price = float(price_list[-1]) if price_list else None
-        suggestion = todays_price <= avg_price if todays_price is not None and avg_price is not None else None
+
+        suggestion = current_price <= avg_price if current_price is not None and avg_price is not None else None
 
         return suggestion
 
@@ -168,11 +142,11 @@ class StationDataAnalyticsModel:
             self.recommendation_icon = Image.open(self.thumb_down_path)
         return self.recommendation_icon
 
-    def update_data(self, station_uuid, fuel_type):
+    def update_data(self, station_uuid, fuel_type, current_price):
         """
         Updates the data for the selected fuel station.
         """
         df = self.retrieve_data(station_uuid, fuel_type)
         self.dates, self.prices = self.process_data(df, fuel_type)
         self.average_price = str(self.calc_avg_price(self.prices))
-        self.is_recommended = self.suggest_result(self.prices)
+        self.is_recommended = self.suggest_result(self.prices, current_price)

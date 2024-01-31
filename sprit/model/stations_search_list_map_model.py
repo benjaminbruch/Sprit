@@ -1,6 +1,5 @@
 from sprit.model.station_model import Station
 from PIL import Image, ImageTk
-import os
 from sprit.resources import helper
 
 
@@ -20,6 +19,7 @@ class StationsSearchListMapModel:
         self.sprit_type = "e10"        # Default fuel type
         self.sort_by = "Preis"         # Default sorting preference
         self.selected_card = None      # Reference to the currently selected station card
+        self.selected_station = None   # Reference to the currently selected station
         self.photo = None              # Reference to the currently selected station icon
 
     def sort_stations_by(self, sort_by: str):
@@ -74,14 +74,10 @@ class StationsSearchListMapModel:
         Returns:
             An ImageTk.PhotoImage object representing the station's icon.
         """
-
-        # Get the directory of the currently running script
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-
         try:
 
-            img = Image.open( helper.find_data_file(f"{station_name}.png"))
-        except FileNotFoundError as e:
+            img = Image.open(helper.find_data_file(f"{station_name}.png"))
+        except FileNotFoundError:
             # If specific station icon is not found, use a default icon
             helper.find_data_file(f"gas_station_icon.png")
             img = Image.open(helper.find_data_file(f"gas_station_icon.png"))

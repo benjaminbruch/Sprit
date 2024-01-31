@@ -21,20 +21,20 @@
 * Tankstellen in der Umgebung suchen inkl. Echtzeitpreise
 * Sortierung nach Preis und Entfernung
 * Filtern nach Kraftstoffart
-* Darstellung der Tankstellen auf einer Karte
+* Darstellung der Tankstellen mit Logo auf einer Karte
 * Anzeige von historischen Preisen
-* Empfehlung der günstigsten Tankstelle und der günstigsten Tankzeit
+* Empfehlung ob aktuell ein guter Zeitpunkt zum Tanken ist
 
 <!-- INSTALLATION -->
 ## Installation
 Es gibt 2 Möglichkeiten die App zu installieren:
 
-a) Die App kann auf Github unter "Releases" für die jeweilige Plattform heruntergeladen werden.
+a) Die App kann als Zip-Datei auf Github unter "Releases" für die jeweilige Plattform heruntergeladen werden. Das heruntergeladene Archiv muss entpackt werden. Anschließend kann die Datei `main` mit Doppelklick ausgeführt werden.
 
 b) Die App kann auch über den Quellcode installiert werden. Dazu muss das Repository geklont werden. Danach sollte in einer Virtuellen Umgebung die Datei `requirements.txt` installiert werden. 
 Abschließend kann die Datei `main.py` ausgeführt werden.
 
-Optional: Kann die unter [Datenimport](#Datenimport) beschriebene Datenbank aktualisiert werden.
+**Wichtig**: Bei Variante b) muss die unter [Datenimport](#Datenimport) beschriebene Datenbank noch aktualisiert werden.
 
 <!-- USAGE EXAMPLES -->
 ## Benutzung
@@ -45,7 +45,8 @@ Optional: Kann die unter [Datenimport](#Datenimport) beschriebene Datenbank aktu
 3. Auswahl der gewünschten Sortierung
 4. Tankstellen werden auf der Karte angezeigt
 5. Bei Auswahl einer Tankstelle in der Liste zoomt die Karte auf die entsprechende Tankstelle
- 
+6. Es werde die Preise der letzten 7 Tage, der Durchnittspreis in diesem Zeitraum und eine Empfehlung zum Tanken angezeigt
+
 <!-- PLANNING -->
 ## Vorgehensweise im Projekt
 ![trello_screenshot.png](files%2Ftrello_screenshot.png)
@@ -63,7 +64,7 @@ Insgesamt bildeten diese Entscheidungen und Tools die Grundlage für eine strukt
 
 <!-- Datenimport -->
 ## Datenimport
-Aktuell wird für den Abruf der historischen Spritpreise und der Berechnung von Durchschnittspreis und Preisempfehlung eine lokale SQLite-Datenbank verwendet. Die Datenbank wird in der Datei `tk_hist.db` im Ordner `data` gespeichert. 
+Aktuell wird für den Abruf der historischen Spritpreise und der Berechnung von Durchschnittspreis und Preisempfehlung eine lokale SQLite-Datenbank verwendet. Die Datenbank wird in der Datei `tk_hist.db` im Ordner `resources` gespeichert. Es sind zum Abgabezeitpunkt die Daten vom 23.01.2024 bis zum 30.01.2024 enthalten.
 Um die Daten zu aktualisieren, müssen die aktuellen CSV-Dateien von der Tankerkönig-Seite: https://dev.azure.com/tankerkoenig/_git/tankerkoenig-data?path=/prices geladen werden und in den Ordner `data/csv` kopiert werden. Anschließend kann das Skript `import_hist_tk_data.py` ausgeführt werden. Die Datenbank wird dann aktualisiert.
 
 Aufgrund der Limitierung von Github von Dateigrößen auf 50 MB konnten wir die Datenbank nicht in das Repository hochladen. Deswegen muss die Datenbank lokal erstellt werden.
@@ -78,7 +79,10 @@ Ein weiterer wichtiger Aspekt, den wir in zukünftigen Updates verbessern möcht
 Mit der asynchronen Programmierung können wir mehrere Aufgaben gleichzeitig ausführen, ohne dass die Benutzeroberfläche blockiert wird. Dies ermöglicht es der Anwendung, auf Benutzereingaben zu reagieren, während sie gleichzeitig andere Aufgaben im Hintergrund ausführt. Dies wird die Benutzererfahrung erheblich verbessern, indem es die wahrgenommenen Ladezeiten reduziert und die allgemeine Reaktionsfähigkeit der Anwendung erhöht.
 <!-- Hinweise -->
 ## Hinweise 
-Für die Erstellung dieser Readme und der Dokumentation inklusive der Inline-Kommentare sowie der Unit-Tests wurde die Hilfe von Github Copilot & OpenAI ChatGPT in Anspruch genommen. Desweiteren wurden diese Tools auch zum Auflösen und Beheben von Fehlermeldungen verwendet.
+1. Im Repository wurden Dateien mit dem Zusatz _"\_old"_ im Dateinamen gekennzeichnet. Diese Dateien sind nicht mehr aktuell und wurden durch neuere Versionen ersetzt. Sie wurden jedoch nicht gelöscht, um den Entwicklungs-Prozess nachvollziehbarer zu machen.
+
+
+2. Für die Erstellung dieser Readme und der Dokumentation inklusive der Inline-Kommentare sowie der Unit-Tests wurde die Hilfe von Github Copilot & OpenAI ChatGPT in Anspruch genommen. Desweiteren wurden diese Tools auch zum Auflösen und Beheben von Fehlermeldungen verwendet.
 <!-- ACKNOWLEDGEMENTS -->
 ## Anerkennung 
 * [Tankerkönig](https://tankerkoenig.de)

@@ -1,9 +1,7 @@
 import unittest
-
-from PIL import ImageTk
-
 from sprit.model.station_model import Station
 from sprit.model.stations_search_list_map_model import StationsSearchListMapModel
+
 
 class TestStationsSearchListMapModel(unittest.TestCase):
     def setUp(self):
@@ -43,6 +41,7 @@ class TestStationsSearchListMapModel(unittest.TestCase):
         self.search_list_map_model.set_sprit_type("E5")
         self.search_list_map_model.update_price_by_sprit_type()
         self.assertEqual(self.search_list_map_model.stations[0].price, self.station.e5)
+
 
 if __name__ == '__main__':
     unittest.main()
