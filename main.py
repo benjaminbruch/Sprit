@@ -3,6 +3,7 @@ from sprit.view.stations_search_list_map_view import StationsSearchListMapView
 
 
 def main():
+    customtkinter.set_appearance_mode("dark")
     app = customtkinter.CTk()
     app.title("Sprit - Die Tankstellensuche")
     app.geometry("1920*1080")
